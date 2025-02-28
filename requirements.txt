@@ -1,0 +1,7 @@
+jupyter-book
+jupyterlab
+jupyterlab-myst
+jupytext
+napari[all]
+napari-animation
+matplotlib

@@ -1,0 +1,11 @@
+name: napari-workshop
+channels:
+  - conda-forge
+dependencies:
+  - jupyterlab
+  - jupytext
+  - jupyter-book
+  - jupyterlab-myst
+  - matplotlib
+  - napari
+  - napari-animation
