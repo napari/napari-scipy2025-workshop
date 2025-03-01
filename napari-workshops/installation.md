@@ -1,16 +1,9 @@
-# Python setup & napari installation
+# napari installation
 
-```{tip}
-If you have any issues with installation, please feel free to write us a message
-on the
-[napari zulip](https://napari.zulipchat.com/#narrow/stream/212875-general) and
-we will try to help you get unstuck.
-```
-
-```{note}
-Make sure you review the instructions below and verify that they are still
-correct before using them in your workshop.
-```
+napari is a Python application and package, so it requires a working Python installation.
+There are multiple ways that Python installations and packages can be managed. For a detailed
+breakdown, we recommend [this excellent guide and tutorial by Talley Lambert (Harvard Medical School)](https://hackmd.io/@talley/SJB_lObBi).
+For the purposes of this workshop, for consistency, we will use [`conda`](https://docs.conda.io/en/latest/) as the Python, package, and environment manager.
 
 ## Installing Python using `conda`
 
@@ -33,7 +26,7 @@ conda update conda
 conda config --add channels conda-forge
 ```
 
-Once you have that set, you can skip to [the next section](#setting-up-your-environment).
+Once you have that set, you can skip to [the next section](setting-up-your-napari-workshop-environment).
 ````
 
 1. In your web browser,  go to:  
@@ -110,19 +103,20 @@ Once you have that set, you can skip to [the next section](#setting-up-your-envi
 
    Again, for changes to take effect, you will need to close and re-open your current shell.
 
-## Setting up your environment
+## Setting up your napari workshop environment
+
 1. Open your terminal.
    - **Windows**: Open the "miniforge prompt" from your start menu
    - **Mac OS**: Open Terminal (you can search for it in spotlight - `cmd` +
      `space`)
    - **Linux**: Open your terminal application
-2. We use an environment to encapsulate the Python tools used for this workshop.
+2. We will use a virtual environment to encapsulate the Python tools used for this workshop.
    This ensures that the requirements for this workshop do not interfere with
-   your other Python projects. To create the environment (named
-   `napari-workshop`) and install Python 3.11 and napari in it, enter the following command:
+   any other Python projects. To create the environment (named
+   `napari-workshop`) with Python 3.11 in it, enter the following command:
 
     ```bash
-    conda create -n napari-workshop -c conda-forge python=3.11 napari pyqt jupyterlab
+    conda create -n napari-workshop -c conda-forge python=3.12 napari pyqt jupyterlab
     ```
 
 3. Once the environment setup has finished, activate the environment:
@@ -134,42 +128,34 @@ Once you have that set, you can skip to [the next section](#setting-up-your-envi
     If you successfully activated the environment, you should now see
    `(napari-workshop)` to the left of your command prompt.
 
-4. Install the additional workshop dependencies with the commands below.  
+   ```{important}
+   Remember to activate the right environment for what you need! And always 
+   double-check that the activated environment is the one you want before installing any 
+   packages—you never want to install into the `base` environment.
+   ```
 
-   For the plugin template:
-
-    ```bash
-    conda install -c conda-forge cookiecutter 
-    ```
-
-   For the `stardist` plugin:
-
-    ```bash
-    conda install -c conda-forge stardist-napari
-    ```
-
-6. Test that your notebook installation is working. We will be using notebooks
+4. Test that your notebook installation is working. We will be using notebooks
    for interactive analysis. Enter the command below and it should launch the
    `jupyter lab` application in a web browser. Once you've confirmed it
    launches, close the web browser and press `ctrl+c` in the terminal window to
    stop the notebook server.
 
     ```bash
-    jupyter lab
+    jupyter notebook
     ```
 
-7. Test your napari installation. Enter the command below and an empty napari
-   viewer should open. You can close the window after it opens. Please note that
-   it takes a bit of extra time to launch napari the first time.
+5. Test your napari installation. Enter the command below and an empty napari
+   viewer should open. You can close the window after it opens using the File menu. 
+   Please note that it takes a bit of extra time (as much as 60 s) to launch napari 
+   the first time, particularly if your computer has security and virus scan applications
+   running.
     
     ```bash
     napari
     ```
 
-````{admonition} Errors launching?
-If you have any issues with installation or launching napari, please feel free to write us a message
-on the
-[napari zulip](https://napari.zulipchat.com/#narrow/stream/212875-general) and
-we will try to help you get unstuck.
+```{admonition} Errors launching?
+Contact the workshop instructors or you can reach out to the napari community on the [napari zulip chat](https://napari.zulipchat.com/#narrow/stream/212875-general)
+```
 
-````
+This installation guide has been reproduced and edited from an [introductory napari tutorial](https://github.com/TheJacksonLaboratory/intro-napari-workshop) at the Jackson Laboratory
