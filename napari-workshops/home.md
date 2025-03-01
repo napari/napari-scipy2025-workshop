@@ -1,15 +1,22 @@
-# napari workshop
+# **TITLE TBD**
 
-This site contains materials for creating and deploying `napari` workshop
-materials. For more information about the project, head over to
-[napari.org](https://napari.org). To explore our plugin ecosystem, be sure to
-check out the [napari hub](https://www.napari-hub.org/).
+This is a three-part workshop that will guide you through the different ways of using napari, from the basics of viewing images and the interface, to extending
+the interface with your own GUI elements and event handlers, to distributing your new analysis workflows via plugins.
 
-Use the sidebar to navigate to the materials, and
-[fork this repo](https://docs.github.com/get-started/quickstart/fork-a-repo) if
-you want to create your own workshop.
+## Getting Started
 
-```{tip}
-If you run into any trouble, head over to our
-[zulip chat](https://napari.zulipchat.com/) where we can help you get unstuck!
-```
+The first step is installing `napari`. We will be using `napari` from Python via Jupyter notebooks or Python scripts.
+
+To install `napari`, follow the [installation guide](./installation.md). Once you've launched a napari viewer, you're ready to start!
+
+## Part 1
+
+TBC
+
+## Part 2
+
+TBC
+
+## Part 3
+
+TBC
