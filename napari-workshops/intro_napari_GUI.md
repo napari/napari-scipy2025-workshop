@@ -1,3 +1,5 @@
+(intro-gui)=
+
 # The napari application
 
 ```{note} This content was based on [material from a workshop](https://github.com/dgmccart/intro-to-napari-workshop) prepared by Dannielle McCarthy (@dgmccart), Sean Martin (@seankmartin), and Melissa Weber Mendonça (@melissawm).

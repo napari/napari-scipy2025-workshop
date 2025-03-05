@@ -1,3 +1,5 @@
+(simple-plugin)=
+
 # Creating a napari plugin
 
 ## Overview

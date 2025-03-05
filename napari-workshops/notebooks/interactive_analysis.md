@@ -10,6 +10,7 @@ kernelspec:
   language: python
   name: python3
 ---
+(interactive-analysis)=
 
 # notebook: interactive analysis
 One need for bioimage analysts is to interactivly perform analysis on images. This interaction could be manual parameter tuning, such as adjusting thresholds, or performing human-in-the-loop analysis through clicking on specific regions of an image.
