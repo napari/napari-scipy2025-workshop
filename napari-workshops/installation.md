@@ -1,3 +1,5 @@
+(installation=)
+
 # napari installation
 
 napari is a Python application and package, so it requires a working Python installation.
