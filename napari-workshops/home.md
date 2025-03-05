@@ -1,22 +1,38 @@
-# **TITLE TBD**
+# Create custom image visualization and analysis tools with napari
 
-This is a three-part workshop that will guide you through the different ways of using napari, from the basics of viewing images and the interface, to extending
-the interface with your own GUI elements and event handlers, to distributing your new analysis workflows via plugins.
+This is a three-part workshop that takes you begins with an introduction to napari, its interface and its layers using
+a simple image analysis exercise. We then look at extending napari's functionality with custom event handlers,
+keybindings and widgets. Finally, we look at how your new custom functionality can be packaged into a pip-installable
+napari plugin.
 
 ## Getting Started
 
-The first step is installing `napari`. We will be using `napari` from Python via Jupyter notebooks or Python scripts.
+Use the [installation guide](./napari-workshops/installation.md) to prepare your environment and install napari and
+its required dependencies.
 
-To install `napari`, follow the [installation guide](./installation.md). Once you've launched a napari viewer, you're ready to start!
+## Part 1 - Using Python and napari to view and analyze imaging data
 
-## Part 1
+In this section we introduce napari's interface, opening and exploring images and other napari layer types, and
+the bi-directional interactions between the napari viewer and a Jupyter notebook. [The napari application](./napari-workshops/intro_napari_GUI.md)
+document will walk you through the basics.
 
-TBC
+The next step is interactive image analysis. Follow through the [interactive analysis](./napari-workshops/notebooks/interactive_analysis.md) notebook
+to learn how to use napari, a Jupyter notebook and scikit-image to perform an image segmentation.
 
-## Part 2
+## Part 2 - Customizing your analysis workflow by extending napari’s functionality
 
-TBC
+We explore three easy ways to add custom functionality to napari to support interactive analysis:
 
-## Part 3
+- **Event handlers** are functions that are executed when different viewer and layer events occur
+- **Keybinding/mouse handlers** are custom functions that are executed when you press a key sequence or click the mouse
+- **Widgets** are custom GUI elements like checkboxes, dropdown menus, buttons and sliders, that you can add to the viewer with simple Python code
 
-TBC
+Follow through the [event handlers and widget](./napari-workshops/notebooks/event_handlers_and_widget.md) notebook to learn how to 
+use these different elements to customize your analysis.
+
+## Part 3 - Distributing your customized functionality with plugins
+
+Now that you've learned how to use napari and built our own custom elements, you might want to share
+them with your coworkers or with the napari community at large! This section walks you through
+packaging your functionality into a pip-installable napari plugin. Follow through the [Creating a napari plugin](./napari-workshops/make_a_simple_plugin.md)
+document to learn how to declare and install a plugin.
