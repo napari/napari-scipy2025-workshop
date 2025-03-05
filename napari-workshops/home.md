@@ -13,10 +13,10 @@ its required dependencies.
 ## Part 1 - Using Python and napari to view and analyze imaging data
 
 In this section we introduce napari's interface, opening and exploring images and other napari layer types, and
-the bi-directional interactions between the napari viewer and a Jupyter notebook. [The napari application](./napari-workshops/intro_napari_GUI.md)
+the bi-directional interactions between the napari viewer and a Jupyter notebook. [The napari application](napari-workshops/intro_napari_GUI.md)
 document will walk you through the basics.
 
-The next step is interactive image analysis. Follow through the [interactive analysis](./napari-workshops/notebooks/interactive_analysis.md) notebook
+The next step is interactive image analysis. Follow through the [interactive analysis](napari-workshops/notebooks/interactive_analysis.md) notebook
 to learn how to use napari, a Jupyter notebook and scikit-image to perform an image segmentation.
 
 ## Part 2 - Customizing your analysis workflow by extending napari’s functionality
@@ -27,12 +27,12 @@ We explore three easy ways to add custom functionality to napari to support inte
 - **Keybinding/mouse handlers** are custom functions that are executed when you press a key sequence or click the mouse
 - **Widgets** are custom GUI elements like checkboxes, dropdown menus, buttons and sliders, that you can add to the viewer with simple Python code
 
-Follow through the [event handlers and widget](./napari-workshops/notebooks/event_handlers_and_widget.md) notebook to learn how to 
+Follow through the [event handlers and widget](napari-workshops/notebooks/event_handlers_and_widget.md) notebook to learn how to 
 use these different elements to customize your analysis.
 
 ## Part 3 - Distributing your customized functionality with plugins
 
 Now that you've learned how to use napari and built our own custom elements, you might want to share
 them with your coworkers or with the napari community at large! This section walks you through
-packaging your functionality into a pip-installable napari plugin. Follow through the [Creating a napari plugin](./napari-workshops/make_a_simple_plugin.md)
+packaging your functionality into a pip-installable napari plugin. Follow through the [Creating a napari plugin](napari-workshops/make_a_simple_plugin.md)
 document to learn how to declare and install a plugin.
