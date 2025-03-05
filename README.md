@@ -1,28 +1,38 @@
-# napari-workshop-template
+# Create custom image visualization and analysis tools with napari
 
-A JupyterBook template for napari workshops.
+This is a three-part workshop that takes you begins with an introduction to napari, its interface and its layers using
+a simple image analysis exercise. We then look at extending napari's functionality with custom event handlers,
+keybindings and widgets. Finally, we look at how your new custom functionality can be packaged into a pip-installable
+napari plugin.
 
-**To see the built website, go to
-https://<your_github_username>.github.io/napari-workshop-template**. For
-example, see this template [here](https://napari.org/napari-workshop-template/home.html).
+## Getting Started
 
-**To see a live version where you can execute the notebooks on your browser, use [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/napari/napari-workshop-template/main)** (make sure this link points to your own repository!)
+Use the [installation guide](./napari-workshops/installation.md) to prepare your environment and install napari and
+its required dependencies.
 
-## What is this repository?
+## Part 1 - Using Python and napari to view and analyze imaging data
 
-This repository is meant to be [forked](https://docs.github.com/en/get-started/quickstart/fork-a-repo) and edited so that you have a starting point when creating your own napari workshop. All instructions below are meant to be executed _on your own fork_, so that you have a copy of the template that you can adjust to your needs.
+In this section we introduce napari's interface, opening and exploring images and other napari layer types, and
+the bi-directional interactions between the napari viewer and a Jupyter notebook. [The napari application](./napari-workshops/intro_napari_GUI.md)
+document will walk you through the basics.
 
-You can also click the `Use this template` button in the GitHub web interface for this repository:
+The next step is interactive image analysis. Follow through the [interactive analysis](./napari-workshops/notebooks/interactive_analysis.md) notebook
+to learn how to use napari, a Jupyter notebook and scikit-image to perform an image segmentation.
 
-![Use this template button on GitHub interface](napari-workshops/docs/images/00-template.png)
+## Part 2 - Customizing your analysis workflow by extending napari’s functionality
 
-> [!TIP]
-> Once you have created your workshop, if you would like the event to be listed [in the workshops page in napari.org](https://napari.org/stable/further-resources/napari-workshops.html), feel free to [submit a pull request to the napari/docs repository](https://github.com/napari/docs/blob/main/docs/further-resources/napari-workshops.md).
+We explore three easy ways to add custom functionality to napari to support interactive analysis:
 
-## Documentation
+- **Event handlers** are functions that are executed when different viewer and layer events occur
+- **Keybinding/mouse handlers** are custom functions that are executed when you press a key sequence or click the mouse
+- **Widgets** are custom GUI elements like checkboxes, dropdown menus, buttons and sliders, that you can add to the viewer with simple Python code
 
-To learn more about how to build, publish, share and cite your workshop materials, check the [Build your own workshop section](https://napari.github.io/napari-workshop-template/docs/build_your_workshop.html).
+Follow through the [event handlers and widget](./napari-workshops/notebooks/event_handlers_and_widget.md) notebook to learn how to 
+use these different elements to customize your analysis.
 
-## Contributing to this repository
+## Part 3 - Distributing your customized functionality with plugins
 
-If you find typos, incomplete or misleading instructions, or have suggestions for improvements to this template, open an issue at the napari/napari-workshop-template repo.
+Now that you've learned how to use napari and built our own custom elements, you might want to share
+them with your coworkers or with the napari community at large! This section walks you through
+packaging your functionality into a pip-installable napari plugin. Follow through the [Creating a napari plugin](./napari-workshops/make_a_simple_plugin.md)
+document to learn how to declare and install a plugin.
