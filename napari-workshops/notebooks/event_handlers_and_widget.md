@@ -11,6 +11,8 @@ kernelspec:
   name: python3
 ---
 
+(event-handlers-widget)=
+
 ```{code-cell} ipython3
 import napari
 import numpy as np
