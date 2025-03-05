@@ -4,14 +4,8 @@
 format: jb-book
 root: home
 chapters:
-- file: docs/build_your_workshop
-  sections:
-  - file: docs/deployment_guide
-  - file: docs/launching_binder
-- file: getting_started
-  sections:
-  - file: installation
-  - file: notebook_setup
+- file: installation
+- file: notebook_setup
 - file: intro_napari_GUI
 - file: plugins
 - file: notebooks/index
