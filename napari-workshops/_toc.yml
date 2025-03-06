@@ -4,10 +4,8 @@
 format: jb-book
 root: home
 chapters:
-- file: getting_started
-  sections:
-  - file: installation
-  - file: notebook_setup
+- file: installation
+- file: notebook_setup
 - file: intro_napari_GUI
 - file: plugins
 - file: notebooks/index
