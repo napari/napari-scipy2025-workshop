@@ -3,7 +3,11 @@
 napari is a Python application and package, so it requires a working Python installation.
 There are multiple ways that Python installations and packages can be managed. For a detailed
 breakdown, we recommend [this excellent guide and tutorial by Talley Lambert (Harvard Medical School)](https://hackmd.io/@talley/SJB_lObBi).
-For the purposes of this workshop, for consistency, we will use [`conda`](https://docs.conda.io/en/latest/) as the Python, package, and environment manager.
+
+```{important}
+For the purposes of this workshop, for consistency, we will use [`conda`](https://docs.conda.io/en/latest/) as the Python, package, and environment manager. However, you can use your own, preferred method to install `napari`, `PyQt5`, and `jupyterlab` into a virtual environment with Python 3.12. Please refer to the [napari installation documentation](https://napari.org/stable/tutorials/fundamentals/installation.html).
+If you prefer to not install anything locally, you can try [running everthing in the cloud using Binder](docs/launching_binder). Please note that performance, particularly 3D rendering, will be limited due to lack of dedicated GPU acceleration.
+```
 
 ## Installing Python using `conda`
 
@@ -141,7 +145,7 @@ Once you have that set, you can skip to [the next section](setting-up-your-napar
    stop the notebook server.
 
     ```bash
-    jupyter notebook
+    jupyter lab
     ```
 
 5. Test your napari installation. Enter the command below and an empty napari
@@ -158,4 +162,4 @@ Once you have that set, you can skip to [the next section](setting-up-your-napar
 Contact the workshop instructors or you can reach out to the napari community on the [napari zulip chat](https://napari.zulipchat.com/#narrow/stream/212875-general)
 ```
 
-This installation guide has been reproduced and edited from an [introductory napari tutorial](https://github.com/TheJacksonLaboratory/intro-napari-workshop) at the Jackson Laboratory
+This installation guide has been reproduced and edited from an [introductory napari tutorial](https://github.com/TheJacksonLaboratory/intro-napari-workshop) at the Jackson Laboratory.

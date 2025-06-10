@@ -12,6 +12,7 @@ chapters:
   sections:
   - file: installation
   - file: notebook_setup
+  - file: docs/launching_binder
 - file: intro_napari_GUI
 - file: plugins
 - file: notebooks/index
