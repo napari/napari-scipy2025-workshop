@@ -4,22 +4,18 @@
 format: jb-book
 root: home
 chapters:
-- file: docs/build_your_workshop
-  sections:
-  - file: docs/deployment_guide
-  - file: docs/launching_binder
-- file: getting_started
-  sections:
-  - file: installation
-  - file: notebook_setup
-  - file: docs/launching_binder
+- file: installation
+- file: notebook_setup
+- file: docs/launching_binder
 - file: intro_napari_GUI
 - file: plugins
 - file: notebooks/index
   sections:
   - file: notebooks/intro_bioimage_visualization
-  - file: notebooks/spot_detection
-  - file: notebooks/segmenting_and_measuring_nuclei_stardist
+  - file: notebooks/interactive_analysis
+  # - file: notebooks/spot_detection
+  # - file: notebooks/segmenting_and_measuring_nuclei_stardist
+  - file: notebooks/event_handlers_and_widget
   - file: notebooks/manual_annotation
   - file: notebooks/custom_colormaps
   - file: notebooks/alternative_notebooks

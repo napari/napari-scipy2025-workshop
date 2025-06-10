@@ -7,7 +7,7 @@ napari plugin.
 
 ## Getting Started
 
-Use the [installation guide](./napari-workshops/installation.md) to prepare your environment and install napari and
+Use the [installation guide](installation) to prepare your environment and install napari and
 its required dependencies.
 
 ## Part 1 - Using Python and napari to view and analyze imaging data
