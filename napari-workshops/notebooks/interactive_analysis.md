@@ -150,6 +150,7 @@ Now we can try and identify the centers of each of the nuclei by finding peaks o
 peak_local_max = feature.peak_local_max(
     smoothed_distance,
     min_distance=7,
+    exclude_border=False
 )
 ```
 
