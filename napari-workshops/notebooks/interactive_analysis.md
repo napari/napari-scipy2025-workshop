@@ -4,12 +4,13 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.14.0
+    jupytext_version: 1.17.1
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
   name: python3
 ---
+
 (interactive-analysis)=
 
 # notebook: interactive analysis
@@ -21,6 +22,7 @@ One need for bioimage analysts is to interactivly perform analysis on images. Th
 
 ```{code-cell} ipython3
 :tags: [remove-output]
+
 # this cell is required to run these notebooks on Binder. Make sure that you also have a desktop tab open.
 import os
 if 'BINDER_SERVICE_HOST' in os.environ:
@@ -92,6 +94,7 @@ from skimage import morphology
 from skimage import feature
 from skimage import measure
 from skimage import segmentation
+from skimage import util 
 from scipy import ndimage
 import numpy as np
 ```
@@ -174,9 +177,7 @@ viewer.layers['peaks'].remove_selected()
 Based on those peaks we can now seed the watershed algorithm which will find the nuclei boundaries.
 
 ```{code-cell} ipython3
-new_peaks = np.round(viewer.layers['peaks'].data).astype(int).T
-seeds = np.zeros(nuclei_mip.shape, dtype=bool)
-seeds[(new_peaks[0], new_peaks[1])] = 1
+markers = util.label_points(viewer.layers['peaks'].data, output_shape=viewer.layers['nuclei_mip'].data.shape)
 
 markers = measure.label(seeds)
 nuclei_segmentation = segmentation.watershed(
@@ -240,7 +241,7 @@ nbscreenshot(viewer)
 @viewer.bind_key('Shift-P')
 def process_foreground(viewer):
     data = viewer.layers['threshold result'].data
-    data_processed = morphology.remove_small_holes(data, 60)
+    data_processed = morphology.remove_small_holes(np.bool(data), 60)
     data_processed = morphology.remove_small_objects(data_processed, min_size=50)
     viewer.layers['threshold result'].data = data_processed
 ```
@@ -269,15 +270,11 @@ def complete_segmentation(viewer):
     smoothed_distance = filters.gaussian(distance, 10)
     peak_local_max = feature.peak_local_max(
         smoothed_distance,
-        footprint=np.ones((7, 7), dtype=bool),
-        indices=False,
-        labels=measure.label(foreground)
+        min_distance=7,
+        exclude_border=False
     )
-    peaks = np.nonzero(peak_local_max)
-    seeds = np.zeros(smoothed_distance.shape, dtype=bool)
-    seeds[(peaks[0], peaks[1])] = 1
+    markers = util.label_points(peak_local_max, output_shape=foreground.data.shape)
 
-    markers = measure.label(seeds)
     nuclei_segmentation = segmentation.watershed(
         -smoothed_distance, 
         markers, 
