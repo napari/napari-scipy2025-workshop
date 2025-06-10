@@ -149,7 +149,7 @@ Now we can try and identify the centers of each of the nuclei by finding peaks o
 ```{code-cell} ipython3
 peak_local_max = feature.peak_local_max(
     smoothed_distance,
-    footprint=np.ones((7, 7), dtype=bool),
+    min_distance=7,
 )
 ```
 
