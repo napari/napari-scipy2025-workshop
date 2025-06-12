@@ -179,7 +179,6 @@ Based on those peaks we can now seed the watershed algorithm which will find the
 ```{code-cell} ipython3
 markers = util.label_points(viewer.layers['peaks'].data, output_shape=viewer.layers['nuclei_mip'].data.shape)
 
-markers = measure.label(seeds)
 nuclei_segmentation = segmentation.watershed(
     -smoothed_distance, 
     markers, 
