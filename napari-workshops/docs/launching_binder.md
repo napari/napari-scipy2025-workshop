@@ -1,4 +1,4 @@
-# How to open the notebooks in the cloud using [mybinder.org](https://mybinder.org)
+# Alternative: Open the notebooks and run napari in the cloud using [mybinder.org](https://mybinder.org)
 
 If you can't install napari and the Jupyter notebook application locally, or if you prefer using a cloud instance of Jupyter to execute and interact with the workshop notebooks, you can follow this guide.
 
@@ -12,7 +12,7 @@ To open a notebook in Binder, click on the rocketship badge at the top of a note
 
 ![Binder badge shown in the "Bioimage visualization in Python" notebook](./images/binder_button.png)
 
-This will open the notebook in Markdown format, but it will not be runnable. Further, because napari is a desktop application, we need a "Desktop" tab to see the napari GUI interface. To do this, close the Markdown notebook and return to the Jupyter launcher.
+This will open the notebook in Markdown format, **but it will not be runnable**. Further, because napari is a desktop application, we need a "Desktop" tab to see the napari GUI interface. To do this, close the Markdown notebook to return to the Jupyter launcher tab.
 
 ## Open desktop tab
 

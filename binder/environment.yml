@@ -2,7 +2,7 @@ name: binder
 channels:
   - conda-forge
 dependencies:
-  - python=3.11
+  - python=3.12
   - jupyterlab
   - jupytext
   - jupyterlab-myst
