@@ -50,14 +50,15 @@ In this tutorial, we will create a spot detection plugin by implementing a
 widget contribution with the spot detection function (`detect_spots()`) we
 created in the first part of this practical session.
 
-## Using the cookiecutter template to create your plugin repository
+## Using the copier template to create your plugin repository
 
 To make creating the creating plugins easier, we provide a template that
 automatically builds most of the infrastructure for your plugin, so you can
 focus on implementing the details unique to your plugin. The template is
 implemented using a command line utility called
-[`cookiecutter`](https://github.com/cookiecutter/cookiecutter). In the following
-steps, you will build your plugin directory using the cookiecutter template.
+[`copier`](https://github.com/copier-org/copier).
+In the following steps, you will build your plugin directory using the
+[napari-plugin-template](https://github.com/napari/napari-plugin-template) template.
 
 First, open your terminal and navigate to the folder where you want the plugin
 folder to be created. As before, we recommend using your Documents folder:
@@ -67,21 +68,28 @@ cd ~/Documents
 ```
 
 Next, activate the conda environment you created in the first part of the
-tutorial. This environment includes all of the packages required to make your
-plugin (including `cookiecutter`).
+tutorial and install the necessary packages to run the template.
 
 ```bash
 conda activate napari-workshop
+conda install copier jinja2-time npe2
 ```
 
-In this next step, we will use `cookiecutter` to create a directory for our
-plugin from the template. `cookiecutter` will ask a series of questions that
+In this next step, we will use `copier` to create a directory for our
+plugin from the template. `copier` will ask a series of questions that
 will customize the directory for your plugin. Once completed, a new directory
 will be created in your current directory. It will come pre-initialized with a
-git repository.
+git repository. Replace \<new-plugin-name> with the name you would like to
+call your plugin.
 
 ```bash
-cookiecutter https://github.com/napari/cookiecutter-napari-plugin
+copier copy --trust https://github.com/napari/napari-plugin-template <new-plugin-name>
+```
+
+Alternatively, you can use a single command to start the template with `uv`:
+
+```bash
+uv tool run --with jinja2-time --with npe2 copier copy --trust https://github.com/napari/napari-plugin-template <new-plugin-name>
 ```
 
 You will be asked for some information to customize the setup of your plugin.
