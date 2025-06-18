@@ -3,6 +3,7 @@
 # Creating a napari plugin
 
 ## Overview
+
 In this tutorial, we will make a napari analysis plugin from the
 `detect_spots()` function we wrote in the first part of this practical session.
 The primary steps in making a napari plugin are as follows:
@@ -14,7 +15,7 @@ The primary steps in making a napari plugin are as follows:
 
 In the following sections, we will work through steps (1) - (3). For step (4),
 you can refer to the [in depth plugin tutorial](https://www.youtube.com/watch?v=NL-VywidzXE),
-or [the instructions on napari.org](https://napari.org/plugins/test_deploy.html#preparing-for-release).
+or [the instructions on napari.org](https://napari.org/stable/plugins/building_a_plugin/index.html).
 You can also use
 [the lecture slides](https://docs.google.com/presentation/d/1-9ObrjrbjtrsO3kjEZELpd3QFDM0ct-oa3L-EIdO77I/edit?usp=sharing)
 as reference material if you'd like.
@@ -22,14 +23,15 @@ as reference material if you'd like.
 ![plugin example](./resources/plugin-01.png)
 
 ## Choosing a contribution
+
 A contribution is a construct in `napari.yaml` (the manifest file), that napari
 uses for each specific type of plugin. Each contribution conforms to a function
 signature, i.e. the function linked to the contribution defines what napari
 provides to the plugin (e.g., data and parameters) and what the plugin returns
 to napari. napari is then able to use the functions pointed to in `napari.yaml`
 to carry out the plugin tasks. Please see the
-[contribution reference](https://napari.org/plugins/contributions.html) and
-[contribution guide](https://napari.org/plugins/guides.html) for more details.
+[manifest reference](https://napari.org/stable/plugins/technical_references/manifest.html) and
+[contribution reference](https://napari.org/stable/plugins/technical_references/contributions.html) for more details.
 Many plugins will declare multiple contributions to provide all of the desired
 functionality.
 
@@ -49,6 +51,7 @@ widget contribution with the spot detection function (`detect_spots()`) we
 created in the first part of this practical session.
 
 ## Using the cookiecutter template to create your plugin repository
+
 To make creating the creating plugins easier, we provide a template that
 automatically builds most of the infrastructure for your plugin, so you can
 focus on implementing the details unique to your plugin. The template is
@@ -187,6 +190,7 @@ directory and files with the file browser. In the next step, you will complete
 your plugin by adding your `detect_spots()` function to the `_widget.py` file.
 
 ## Implementing a function GUI
+
 In this step, we will implement our `detect_spots()` function as a plugin
 contribution. First, we will add our spot detection function to the plugin
 package. Then, we will add the type annotations to the function to so that
@@ -252,7 +256,7 @@ napari can infer the correct GUI elements to add to our plugin.
            With minimal extra work you can configure options for your GUI
            elements, such as min and max values for integers, or choices for
            dropdown boxes. See the
-           [magicgui configuration docs](https://napari.org/magicgui/usage/configuration.html)
+           [extending with magicgui docs](https://napari.org/stable/howtos/extending/magicgui.html)
            for details on what you can configure in the decorator.
 
              ```python
@@ -301,9 +305,7 @@ napari can infer the correct GUI elements to add to our plugin.
 8. Next, we need to modify `detect_spots()` to return the necessary layer data
    so that napari can create a new Points layer with our detected spots. If
    `detect_spots()` returns a `LayerDataTuple`, napari will add a new layer to
-   the viewer using the data in the `LayerDataTuple`. For more information on
-   the `LayerDataTuple` type, please see
-   [the docs](https://napari.org/plugins/guides.html#the-layerdata-tuple).
+   the viewer using the data in the [`LayerDataTuple`](https://napari.org/stable/howtos/extending/magicgui.html#returning-napari-types-layerdatatuple).
     - The layer data tuple should be: `(layer_data, layer_metadata, layer_type)`
     - `layer_data`: the data to be displayed in the new layer (i.e., the points
       coordinates)
@@ -311,10 +313,10 @@ napari can infer the correct GUI elements to add to our plugin.
       dictionary. Some options to consider: `symbol`, `size`
     - `layer_type`: the name of the layer type as a string (i.e., `'Points'`)
 9. Add type annotations to the function parameters (inputs). napari (via
-   [magicgui](https://napari.org/magicgui/)) will infer the required GUI
+   [magicgui](https://pyapp-kit.github.io/magicgui/)) will infer the required GUI
    elements from the type annotations. We have to add annotations to both the
    parameters (i.e., inputs to the function) and the return type.
-10. Annotate the Return type as `"napari.types.LayerDataTuple"`. 
+10. Annotate the Return type as `"napari.types.LayerDataTuple"`.
 11. Add the required imports for the `scipy.ndimage` module and `scikit-image`
    `blob_log()` function to the top of the file.
     - `from scipy import ndimage as ndi`
@@ -435,6 +437,7 @@ contributions:
 ```
 
 ## Explore the other files generated by cookiecutter
+
 In order for napari to automatically find and make your plugin available to the
 user once it has been installed (i.e., "discoverable"), we must add a
 `napari.manifest` entry point to the `setup.cfg` file. An entry point is a way
@@ -448,7 +451,7 @@ point was already added by the cookiecutter template! If you called your plugin
 `napari-spot-detector` and your module `napari_spot_detector`, you will see the
 following:
 
-```
+```yaml
 [options.entry_points]
 napari.manifest =
     napari-spot-detector = napari_spot_detector:napari.yaml
@@ -458,12 +461,13 @@ Note that `src` doesn't occur in the path to `napari.yaml`, but `napari.yaml` is
 definitely within the `src` folder! Python knows to look inside the `src` folder
 for your code because `setup.cfg` declares an `options.packages.find` key.
 
-```
+```yaml
 [options.packages.find]
 where = src
 ```
 
 ## Testing/Installing your plugin
+
 To test and use our plugin, we need to install it in our Python environment.
 First, return to your terminal and verify you have the `napari-workshop`
 environment activated. Then, navigate to the directory that you created with the
@@ -499,7 +503,6 @@ the napari viewer, and try running the plugin.
 
 Congratulations! You have made your first napari plugin!
 
-
 ## Bonus exercises
 
 In case you have finished all of the exercises with some time to spare, we have
@@ -507,7 +510,7 @@ provided some ideas for ways that you can extend the plugin. Please feel free to
 give them a go and ask the teaching team if you have any questions.
 
 - Add sample data to your plugin. To do so, you would need to implement the
-  [sample data contribution](https://napari.org/plugins/guides.html#sample-data)
+  [sample data contribution](https://napari.org/stable/plugins/technical_references/contributions.html#contributions-sample-data)
 - Add an option to your `detect_spots()` function plugin to return the filtered
   image in addition to the points layer.
 - Add some tests to the `_tests/test_widget.py` file.
