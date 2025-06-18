@@ -13,9 +13,9 @@ kernelspec:
 (interactive-analysis)=
 
 # notebook: interactive analysis
-One need for bioimage analysts is to interactivly perform analysis on images. This interaction could be manual parameter tuning, such as adjusting thresholds, or performing human-in-the-loop analysis through clicking on specific regions of an image.
+One need for bioimage analysts is to interactively perform analysis on images. This interaction could be manual parameter tuning, such as adjusting thresholds, or performing human-in-the-loop analysis through clicking on specific regions of an image.
 
-**[napari](https://napari.org/)** makes such interactive analyses easy because of it's easy coupling with Python and Scientific Python ecosystem, including tools like **[numpy](https://numpy.org/)** and **[scikit-image](https://scikit-image.org/)**.
+**[napari](https://napari.org/)** makes such interactive analyses easy because of its easy coupling with Python and the Scientific Python ecosystem, including tools like **[numpy](https://numpy.org/)** and **[scikit-image](https://scikit-image.org/)**.
 
 ## Setup
 
@@ -57,7 +57,7 @@ nbscreenshot(viewer)
 
 ## Visualizing image filtering results
 
-One common task in image processing in **image filtering** which can be used to denoise an image or detect edges or other features.
+One common task in image processing is **image filtering** which can be used to denoise an image or detect edges and other features.
 
 We can use **napari** to visualize the results of some of the image filters that come with the **scikit-image** library.
 
@@ -85,7 +85,7 @@ for l in viewer.layers[1:]:
 ```
 
 ## Interactive segmentation
-Let's now perform an interactive segmentation of the nuclei using processing utilities from scikit-image.
+Let's now perform an interactive segmentation of the nuclei using processing utilities from `scikit-image`.
 
 ```{code-cell} ipython3
 from skimage import morphology
@@ -96,7 +96,7 @@ from scipy import ndimage
 import numpy as np
 ```
 
-First let's try and seperate background from foreground using a threhold. Here we'll use an automatically calculated threshold.
+First, let's try and seperate background from foreground using a threshold. Here we'll use an automatically calculated threshold.
 
 ```{code-cell} ipython3
 foreground = nuclei_mip >= filters.threshold_li(nuclei_mip)
@@ -107,7 +107,7 @@ viewer.add_labels(foreground, name='foreground')
 nbscreenshot(viewer)
 ```
 
-Notice the debris located outside the nuclei and some of the holes located inside the nuclei. We will remove the debris by filtering out small objects, and fill the holes using a hole filling algorithm. We can update the data in the viewer in place.
+Notice the debris located outside the nuclei and some of the holes located inside the nuclei. We will remove the debris by filtering out small objects, and fill the holes using a hole-filling algorithm. We can update the data of the layer in-place.
 
 ```{code-cell} ipython3
 foreground_processed = morphology.remove_small_holes(foreground, 60)
@@ -122,7 +122,7 @@ nbscreenshot(viewer)
 
 We will now convert this binary mask into an **instance segmentation** where each nuclei is assigned a unique label.
 
-We will do this using a **marker controlled watershed** approach. The first step in this procedure is to calculate a distance transform on the binary mask as follows.
+We will do this using a **marker-controlled watershed** approach. The first step in this procedure is to calculate a distance transform on the binary mask as follows.
 
 ```{code-cell} ipython3
 distance = ndimage.distance_transform_edt(foreground_processed)
@@ -133,7 +133,7 @@ viewer.add_image(distance)
 nbscreenshot(viewer)
 ```
 
-We'll actually want to smooth the distance transform to avoid over segmentation artifacts. We can do this on the data in the viewer in place.
+We'll actually want to smooth the distance transform to avoid over-segmentation artifacts. We can do this on the layer data in-place.
 
 ```{code-cell} ipython3
 smoothed_distance = filters.gaussian(distance, 10)
@@ -144,7 +144,7 @@ viewer.layers['distance'].data = smoothed_distance
 nbscreenshot(viewer)
 ```
 
-Now we can try and identify the centers of each of the nuclei by finding peaks of the distance transform
+Now we can try to identify the centers of each of the nuclei by finding peaks of the distance transform.
 
 ```{code-cell} ipython3
 peak_local_max = feature.peak_local_max(
@@ -164,7 +164,7 @@ viewer.add_points(np.array(peaks).T, name='peaks', size=5, face_color='red');
 nbscreenshot(viewer)
 ```
 
-We can now remove any of the points that don't correspond to nuclei centers or add any new ones using the GUI.
+We can now remove any of the points that don't correspond to nuclei centers, or add any new ones using the GUI.
 
 ```{code-cell} ipython3
 :tags: [remove-cell]
@@ -202,9 +202,9 @@ viewer.layers['nuclei_segmentation'].save('nuclei-automated-segmentation.tif', p
 
 ## Interactive thresholding with a custom GUI element
 
-Interactivity can be greatly enhanced by custom GUI elements like slides and push buttons, custom mouse functions, or custom keybindings. **[napari](https://napari.org/)** can easliy be exteneded with these features, and a companion library **[magicgui](https://magicgui.readthedocs.io/en/latest/)** maintained by the napari team allows users to make extensions to the GUI without having to write any GUI code.
+Interactivity can be greatly enhanced by custom GUI elements like sliders and push buttons, custom mouse functions, or custom keybindings (keyboard shortcuts). **[napari](https://napari.org/)** can easily be extended with these features, and a companion library **[magicgui](https://magicgui.readthedocs.io/en/latest/)** maintained by the napari team allows users to make extensions to the GUI without having to write any GUI code.
 
-We'll now explore adding such interactivty to **napari**.
+We'll now explore adding such interactivity to **napari**.
 
 ```{code-cell} ipython3
 # Remove all processed layers
@@ -236,7 +236,7 @@ viewer.window.add_dock_widget(threshold, area="right")
 nbscreenshot(viewer)
 ```
 
-## Adding a custom key binding to the viewer for processing foreground data
+## Adding a custom keybinding to the viewer for processing foreground data
 
 ```{code-cell} ipython3
 @viewer.bind_key('Shift-P')
