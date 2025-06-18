@@ -190,7 +190,7 @@ the other files.
   available through the built-in napari plugin browser. Please ask the teaching
   team if you would like to learn how to set up your github repository to
   support this workflow.
-- `pyproject.toml` and `setup.cfg`: These files allow your plugin to be built as
+- `pyproject.toml`: This file allow your plugin to be built as
   a package and installed by pip. The napari-plugin-template has set everything
   up in these files, so you are good to go!
 - The `src/` folder contains all the Python code for your plugin.
@@ -457,30 +457,30 @@ contributions:
 
 In order for napari to automatically find and make your plugin available to the
 user once it has been installed (i.e., "discoverable"), we must add a
-`napari.manifest` entry point to the `setup.cfg` file. An entry point is a way
+`napari.manifest` entry point to the `pyproject.toml` file. An entry point is a way
 that a Python package can advertise that it has a component available (our
 plugin in this case). napari searches the python environment for packages that
 have a `napari.manifest` and then uses the path in the `entry_point` to find
 `napari.yaml`, where all your plugin functionality is declared.
 
-If we open the `setup.cfg` file created by the template, we see that the entry
+If we open the `pyproject.toml` file created by the template, we see that the entry
 point was already added by the template! If you called your plugin
 `napari-spot-detector` and your module `napari_spot_detector`, you will see the
 following:
 
 ```yaml
-[options.entry_points]
+[project.entry-points."napari.manifest"]
 napari.manifest =
     napari-spot-detector = napari_spot_detector:napari.yaml
 ```
 
 Note that `src` doesn't occur in the path to `napari.yaml`, but `napari.yaml` is
 definitely within the `src` folder! Python knows to look inside the `src` folder
-for your code because `setup.cfg` declares an `options.packages.find` key.
+for your code because `pyproject.toml` declares so with the following:
 
 ```yaml
-[options.packages.find]
-where = src
+[tool.setuptools.packages.find]
+where = ["src"]
 ```
 
 ## Testing/Installing your plugin
