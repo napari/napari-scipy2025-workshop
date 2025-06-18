@@ -148,26 +148,35 @@ would like to give it a try. Your new plugin directory (assuming you called the
 plugin `napari-spot-detector` and the module `napari_spot_detector`) will be
 organized as follows (with some irrelevant files/folders omitted)
 
-```
+```text
 napari-spot-detector
 ├── .github
-│   └── workflows
-│       └── test_and_deploy.yml
-├── LICENSE
-├── MANIFEST.in
-├── .napari
-│   └── DESCRIPTION.md
-├── pyproject.toml
-├── README.md
-├── setup.cfg
+|   ├── ISSUE TEMPLATE
+|   |   ├── bug_report.yml
+│   |   ├── documentation.md
+│   |   ├── feature_request.md
+│   |   └── task.md
+│   ├── workflows
+│   |   └── test_and_deploy.yml
+|   ├── PULL_REQUEST_TEMPLATE.md
+│   └── dependabot.yml
+├── .napari-hub
+│   ├── DESCRIPTION.md
+|   └── config.yml
 ├── src
 │   └── napari_spot_detector
-│       ├── __init__.py
-│       ├── napari.yaml
 │       ├── _tests
 │       │   ├── __init__.py
 │       │   └── test_widget.py
+│       ├── __init__.py
+│       ├── napari.yaml
 │       └── _widget.py
+├── .gitignore
+├── .pre-commit-config.yaml
+├── LICENSE
+├── MANIFEST.in
+├── pyproject.toml
+├── README.md
 └── tox.ini
 ```
 
