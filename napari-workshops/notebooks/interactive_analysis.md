@@ -65,11 +65,10 @@ nuclei = image_data[:, 1, :, :]
 Further, we will compute a maximum intensity projection of the nuclei data, reducing the dimensionality of the data from 3D to 2D, prior to adding the image to the viewer.  
 
 ```{code-cell} ipython3
-from tifffile import imread
-
+print('Shape of nuclei array: ', nuclei.shape)
 # calculate max projection using numpy method
 nuclei_mip = nuclei.max(axis=0)
-print(nuclei_mip.shape)
+print('Shape of max projection of nuclei: ', nuclei_mip.shape)
 ```
 
 ```{code-cell} ipython3
