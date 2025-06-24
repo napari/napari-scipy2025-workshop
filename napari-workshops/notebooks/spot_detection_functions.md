@@ -152,7 +152,7 @@ nbscreenshot(viewer)
 ```
 
 Notice that because we told `magicgui` that our function will use not just any numpy array, but 
-specifically `ImageData`---the data of an Image layer---and that it will also return that same type, `magicgui`
+specifically `ImageData`---the data of a `napari` Image layer---and that it will also return that same type, `magicgui`
 generated UI widgets for selecting an Image layer---if you add a different layer type, it won't show
 up in the dropdown!
 Press the `Run` button and you will see that a new Image layer is added with the results of our
@@ -166,7 +166,7 @@ gaussian_high_pass(viewer.layers['spots'].data)
 ```
 
 ```{important}
-Because we are just returning `ImageData`, so there is no information passed about colormaps, blending, etc. If we want to specify that, we would need to annotate as [`LayerDataTuple`](https://napari.org/stable/guides/magicgui.html#returning-napari-types-layerdatatuple). (We will do this in the next example.)
+Because we are just returning `ImageData`, there is no information passed about colormaps, blending, etc. If we want to specify that, we would need to annotate as [`LayerDataTuple`](https://napari.org/stable/guides/magicgui.html#returning-napari-types-layerdatatuple). (We will do this in the next example.)
 ```
 For now you will need to manually or programmatically set any colormap/blending settings. (Let's also hide the previous filtering output.)
 
@@ -188,7 +188,7 @@ Hover over the labels `image` and `sigma` -- the names of the parameters we pass
 You should see tooltips with the docstring information! How cool is that? More *magic* from `magicgui`!
 ```
 
-Our `gaussian_high_pass` object *is the widget*, so we can easily get the value of the current setting:
+Our `magicgui` decorated `gaussian_high_pass` object *is the widget*, so we can easily get the value of the current setting:
 
 ```{code-cell} ipython3
 gaussian_high_pass.sigma.value
@@ -274,7 +274,7 @@ nbscreenshot(viewer)
 Finally, lets make a widget for the whole workflow developed in the [Exploratory analysis: spot detection](spot_detection_basic) 
 notebook as a function. We will need to write a function and then properly annotate it such that `magicgui` can generate the widgets. 
 This time we are also starting with image layer (data), but then we want a Points layer with points. We could again return 
-just the layer data using `napari.types.PointsData`. But lets get a nicer Points layer instead, so 
+just the layer data using `napari.types.PointsData`. However, we would like some control over the Points layer visualization, so 
 we will return a LayerDataTuple.  
 
 If `detect_spots()` returns a `LayerDataTuple`, napari will add a *new layer* to
