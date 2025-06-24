@@ -30,7 +30,7 @@ If you encounter issues with a napari plugin, please check the plugin's document
 * Once the install completes, search for **skimage** and install the **napari-skimage** plugin as well.  
 
     ```{tip}
-    - After clicking the install button and you can monitor the **installing…** process by clicking `Show status` at the bottom left. This can be helpful in trouble-shooting installation issues.
+    - After clicking the install button, you can monitor the **installing…** process by clicking `Show status` at the bottom left. This can be helpful in trouble-shooting installation issues.
     - You can queue multiple plugins to install at once, by searching for a new plugin and clicking the install button.
     ``` 
 * After installing plugins, it is recommended that you close napari and reopen it to continue.
@@ -70,10 +70,8 @@ A good way to get a sense of the functionalities offered by a plugin is to use t
 
 1. [napari-animation](https://napari.org/napari-animation/): a plugin that lets you make
    (and export) animations in napari by simply setting key frames.
-1. [napari-threedee](https://napari-threedee.github.io): a plugin to make interacting and annotating in 3D easier.
 1. [napari-ome-zarr](https://www.napari-hub.org/plugins/napari-ome-zarr): a reader plugin for for `zarr` backed
    OME-NGFF images (local or remote).
 1. [napari-tiff](https://www.napari-hub.org/plugins/napari-tiff): a reader plugin that can open `tiff` files and variants like `svs` or `ndpi` and load them as multi-scale data.
 1. [napari-matplotlib](https://napari-matplotlib.github.io): a plugin providing widgets with `matplotlib` based
    plots, such as histogram, scatter plot, line plot, etc. 
-
