@@ -18,7 +18,8 @@ In this activity, we will perform spot detection on some in situ sequencing data
 ([Feldman and Singh et al., Cell, 2019](https://www.cell.com/cell/fulltext/S0092-8674(19)31067-0s)).
 In doing so, we will combine methods from [scipy](https://www.scipy.org/) and
 [scikit-image](https://scikit-image.org/). The goal is to familiarize you with
-performing analysis that integrates the scientific python ecosystem and napari.
+performing analysis that integrates the scientific python ecosystem and napari.  
+This notebook also serves as the basis and motivation for the next notebook: [From workflow to widget: customizing napari](spot_detection_functions).
 
 ## Data source
 
