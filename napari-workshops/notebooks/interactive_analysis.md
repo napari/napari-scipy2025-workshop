@@ -39,13 +39,36 @@ from napari.utils import nbscreenshot
 viewer = napari.Viewer()
 ```
 
-Let's read the original image from previous lessons, take a maximum projection, and view it in napari:
+There are multiple ways of reading image data into napari: drag-and-drop, **File > Open**, or programmatic reading.  
+For example, we could explicitly load a 3D image using the `tifffile` library and then use the `add_image()` method of our existing `Viewer` object named `viewer`. This approach allows you to load data into napari even if a Reader plugin doesn't exist for that file format!
+
+```Python
+import napari
+from tifffile import imread
+
+# load the image data using tifffile
+nuclei = imread('data/nuclei.tif')
+viewer.add_image(nuclei)
+```
+
+However, here, for simplicity, we will use the [`cells3d` dataset, provided by scikit-image](https://scikit-image.org/docs/stable/api/skimage.data.html#skimage.data.cells3d). 
+
+```{code-cell} ipython3
+from skimage.data import cells3d
+
+image_data = cells3d()  # shape (60, 2, 256, 256)
+
+membranes = image_data[:, 0, :, :]
+nuclei = image_data[:, 1, :, :]
+```
+
+Further, we will compute a maximum intensity projection of the nuclei data, reducing the dimensionality of the data from 3D to 2D, prior to adding the image to the viewer.  
 
 ```{code-cell} ipython3
 from tifffile import imread
 
-# load the image data and inspect its shape
-nuclei_mip = imread('data/nuclei.tif').max(axis=0)
+# calculate max projection using numpy method
+nuclei_mip = nuclei.max(axis=0)
 print(nuclei_mip.shape)
 ```
 
