@@ -11,7 +11,7 @@ Currently, plugins can:
 Plugins can be installed as Python packages using `pip` or, in most cases, `conda` or from within the
 napari GUI using the Plugin menu.
 
-For you as a user, plugins are a way to extend the functionality of napari and access features that are not part of the core napari viewer experience. Often, they provide GUI access to complex Python functions or workflows. For a developer, plugins are a way to share imaging-related code in a robust way with the broader scientific community, using napari for the user interface and visualization capabilities.
+As a user, plugins are a way to extend the functionality of napari and access features that are not part of the core napari viewer experience. Often, they provide GUI access to complex Python functions or workflows. For a developer, plugins are a way to share code for image and data visualization, processing, and analysis in a robust way with the broader scientific community, using napari for the user interface and visualization capabilities.
 
 For more information on plugins, please see the [official Plugin documentation](https://napari.org/stable/plugins/index.html).
 
