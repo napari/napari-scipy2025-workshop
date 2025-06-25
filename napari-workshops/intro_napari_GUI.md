@@ -24,6 +24,14 @@ Once you have the proper environment active, you can launch napari by typing `na
 napari
 ```
 
+````{note}
+If you are using [the Binder cloud setup](docs/launching_binder.md), then in the Binder Jupyter lab interface, you can open a Desktop in a browser tab using the `D` "Desktop" tile and then open a Terminal session using the `$_` "Terminal" tile. In this terminal, you can launch napari in the Desktop browser tab using the command:
+```bash
+DISPLAY=:1.0 napari
+```
+You will then be able to proceed with the rest of the instructions on this page.
+````
+
 After a few seconds (or up to a minute if it's the first launch and you have various security and antivirus software installed), you will get the `viewer` window, which is annotated below:
 
 ![Viewer](resources/viewer-with-arrows.png)  
