@@ -423,6 +423,21 @@ Worse yet, this will silently fail, because the builtin napari keybinding *will*
 There are actually a number of other events that you can connect callbacks to, other than just key presses.
 For more information, see the [napari events documentation](https://napari.org/stable/howtos/connecting_events.html).
 
+## Suggestions for further exploration
+
+Try to implement a widget or keybinding on your own! If you have something that interests you, see if you can implement it in napari---feel free to use your own data, a different sample file! Otherwise, working with this notebook, here are a few things you can try to implement that we came up with:
+
+* Replace the default float SpinBox widgets with sliders in final detect_spots function/widget.
+
+* Convert one of the widgets above to use [`@magic_factory`](https://pyapp-kit.github.io/magicgui/decorators/#magic_factory) instead of `@magicgui`. How does the usage/behavior change?
+
+* Create a widget that lets the user pick from a number of different filters, see [skimage.filters](https://scikit-image.org/docs/0.25.x/api/skimage.filters.html) for ideas. It might be easiest to use an [`enum`](https://docs.python.org/3/library/enum.html#enum.Enum) for this, that contains multiple different filters, so that `magicgui` creates a dropdown that allows you to select them.
+
+* Replace the blob-log detector with a different one, e.g., [`skimage.feature.peak_local_max`](https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.peak_local_max), [`skimage.feature.blob_dog`](https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.blob_dog), etc. You can find some ideas in the [scikit-image feature detection documentation](https://scikit-image.org/docs/stable/auto_examples/features_detection/plot_blob.html).
+
+* Extend either of the two examples above to the full Layer, rather just the data array, and then make it so that the returned Layer uses (some of) visualization parameters of the original layer. This will require using the `LayerDataTuple` return type.
+
+* Add a keybinding to trigger running either of the two widgets above. Consider what to attach the keybinding to: the viewer? a Layer type? a specific layer? Try to make the keybinding not to be to "fragile", in other words, consider what happens if the user has modified the layer list significantly!
 
 ## Conclusions
 
