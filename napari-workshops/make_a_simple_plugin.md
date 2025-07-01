@@ -50,7 +50,7 @@ In this tutorial, we will create a spot detection plugin by implementing a
 widget contribution with the spot detection function (`detect_spots()`) we
 created in the first part of this practical session.
 
-## Using the copier napari-plugin-template to create your plugin repository
+## Using the copier `napari-plugin-template` to create your plugin repository
 
 To make creating the creating plugins easier, we provide a template that
 automatically builds most of the infrastructure for your plugin, so you can
@@ -58,7 +58,7 @@ focus on implementing the details unique to your plugin. The template is
 implemented using a command line utility called
 [`copier`](https://github.com/copier-org/copier).
 In the following steps, you will build your plugin directory using the
-[napari-plugin-template](https://github.com/napari/napari-plugin-template) template.
+[`napari-plugin-template`](https://github.com/napari/napari-plugin-template) template.
 
 First, open your terminal and navigate to the folder where you want the plugin
 folder to be created. As before, we recommend using your Documents folder:
@@ -190,8 +190,8 @@ the other files.
   available through the built-in napari plugin browser. Please ask the teaching
   team if you would like to learn how to set up your github repository to
   support this workflow.
-- `pyproject.toml`: This file allow your plugin to be built as
-  a package and installed by pip. The napari-plugin-template has set everything
+- `pyproject.toml`: This file allows your plugin to be built as
+  a package and installed by pip. The `napari-plugin-template` has set everything
   up in these files, so you are good to go!
 - The `src/` folder contains all the Python code for your plugin.
 - `src/napari_spot_detector/_widget.py`: This file contains example
@@ -210,7 +210,7 @@ your plugin by adding your `detect_spots()` function to the `_widget.py` file.
 
 In this step, we will implement our `detect_spots()` function as a plugin
 contribution. First, we will add our spot detection function to the plugin
-package. Then, we will add the type annotations to the function to so that
+package. Then, we will add the type annotations to the function so that
 napari can infer the correct GUI elements to add to our plugin.
 
 1. To edit your plugin source code, open an integrated development environment
@@ -320,7 +320,7 @@ napari can infer the correct GUI elements to add to our plugin.
    notebook from the first part of the tutorial and paste it where the example
    functions were (the ones you deleted in the previous step).
 8. Next, we need to modify `detect_spots()` to return the necessary layer data
-   so that napari can create a new Points layer with our detected spots. If
+   so that napari can create a new `Points` layer with our detected spots. If
    `detect_spots()` returns a `LayerDataTuple`, napari will add a new layer to
    the viewer using the data in the [`LayerDataTuple`](https://napari.org/stable/howtos/extending/magicgui.html#returning-napari-types-layerdatatuple).
     - The layer data tuple should be: `(layer_data, layer_metadata, layer_type)`
