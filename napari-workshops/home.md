@@ -8,7 +8,7 @@ napari plugin.
 ## Getting Started
 
 Use the [installation guide](installation) to prepare your environment and install napari and
-its required dependencies.
+its required dependencies locally. Running napari locally is likely to give you the best experience, but you can also run napari and the workshop materials in the cloud using the SciPy 2025 Nebari instance. See our [Nebari instructions](nebari) for details.
 
 ## Part 1 - Using Python and napari to view and analyze imaging data
 
