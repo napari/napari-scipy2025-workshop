@@ -13,12 +13,10 @@ The primary steps in making a napari plugin are as follows:
 3. Implement your contributions
 4. Share your plugin with the community
 
-In the following sections, we will work through steps (1) - (3). For step (4),
-you can refer to the [in depth plugin tutorial](https://www.youtube.com/watch?v=NL-VywidzXE),
-or [the instructions on napari.org](https://napari.org/stable/plugins/building_a_plugin/index.html).
-You can also use
-[the lecture slides](https://docs.google.com/presentation/d/1-9ObrjrbjtrsO3kjEZELpd3QFDM0ct-oa3L-EIdO77I/edit?usp=sharing)
-as reference material if you'd like.
+In the following sections, we will work through steps (1) - (3).
+To set up a minimal plugin, you can read the ["Your first plugin"](https://napari.org/dev/plugins/building_a_plugin/first_plugin.html#your-first-plugin) tutorial on napari.org.
+For step (4), you can refer to the [in depth plugin tutorial](https://www.youtube.com/watch?v=NL-VywidzXE),
+or [the deploy instructions on napari.org](https://napari.org/dev/plugins/building_a_plugin/index.html#[plugin-test-deploy]).
 
 ![plugin example](./resources/plugin-01.png)
 
