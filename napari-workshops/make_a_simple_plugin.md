@@ -93,60 +93,16 @@ uv tool run --with jinja2-time --with npe2 copier copy --trust https://github.co
 ```
 
 You will be asked for some information to customize the setup of your plugin.
-Each prompt gives the default value in square brackets (`[]`). The questions are
-explained below. Enter your answer after the prompt and press enter to continue.
-
-- `full_name [Napari Developer]`: enter your name here. Names entered here will
-  be listed as the authors of the plugin in the package metadata.
-- `email [yourname@example.com]`: this email will be listed as the contact
-  information in the package metadata
-- `github_username_or_organization [githubuser]`: if you have a github username,
-  you can enter it here. It will be used to generate a GitHub URL for you after
-  you enter a plugin name.
-- `plugin_name [napari-foobar]`: enter the name you would like your plugin to be
-  called. spaces are not allowed and are often replaced with `-` (e.g.,
-  `napari-spot-detector`). This will be your PyPI package name (if you choose to
-  deploy your plugin).
-- `Select github_repository_url:` this is used for plugin metadata and is not
-  required now. If you don't plan to upload it to your github, select 2.
-- `module_name [napari_foobar]`: this is the name of the module containing your
-  plugin code. typically, this is the plugin name with the `-` replaced with `_`
-  (e.g., `napari_spot_detector`).
-- `display_name [napari FooBar]`: this name will show up in the napari viewer
-  and on the napari hub if you release your plugin. You should pick something
-  human readable and ideally indicative of what your plugin does. There are no
-  restrictions on the symbols in this name.
-- `short_description [A simple plugin to use with napari]`: give a one sentence
-  description of your plugin. This will go into the readme.
-- `include_reader_plugin [y]`: answer `y` (for yes) if you would like a reader
-  contribution. We do not need a reader contribution for this tutorial, so
-  answer `n` for no.
-- `include_writer_plugin [y]`answer `y` (for yes) if you would like a writer
-  contribution. We do not need a reader contribution for this tutorial, so
-  answer `n` for no.
-- `include_sample_data_plugin [y]`: answer `y` (for yes) if you would like a
-  sample data contribution. We do not need a sample data contribution for this
-  tutorial, so answer `n` for no.
-- `include_dock_widget_plugin [y]`: answer `y` (for yes) if you would like a
-  widget contribution. We are implementing a widget contribution for this
-  tutorial, **so answer `y` for yes**.
-- `use_git_tags_for_versioning [n]`: we will not be covering setting plugin
-  versions in this tutorial, so enter `n` for no.
-- `install_precommit [n]`: we will not be covering precommit in this tutorial,
-  so enter `n` for no.
-- `Select license`: select the license you would like to use for your plugin.
-  The license sets the rules for how others can build upon and re-use your
-  plugin code. For more information on typical open source licenses,
-  [choosealicense.com](https://choosealicense.com/) is a good primer. The
-  default choice is [BSD-3](https://opensource.org/licenses/BSD-3-Clause).
-
+Each prompt gives the default value in square brackets (`[]`). Enter your answer after the prompt and press enter to continue.
+To read more about the prompts, you can refer to the `napari-plugin-template`
+[Prompts Reference](https://github.com/napari/napari-plugin-template/blob/main/PROMPTS.md)
 After completing all of the questions, a directory will be created containing
 your new napari plugin. You will be given instructions on how to upload the
 initialized git repository to GitHub. By default, we will not be covering this
 aspect in the tutorial, but please feel free to ask the teaching team if you
 would like to give it a try. Your new plugin directory (assuming you called the
 plugin `napari-spot-detector` and the module `napari_spot_detector`) will be
-organized as follows (with some irrelevant files/folders omitted)
+organized as follows.
 
 ```text
 napari-spot-detector
