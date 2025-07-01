@@ -18,16 +18,18 @@ One need for bioimage analysts is to interactively perform analysis on images. T
 
 **[napari](https://napari.org/)** makes such interactive analyses easy because of its easy coupling with Python and the Scientific Python ecosystem, including tools like **[numpy](https://numpy.org/)** and **[scikit-image](https://scikit-image.org/)**.
 
-## Setup
+## `Nebari` and `Binder` setup
 
 ```{code-cell} ipython3
 :tags: [remove-output]
 
-# this cell is required to run these notebooks on Binder. Make sure that you also have a desktop tab open.
+# this cell is required to run these notebooks in the cloud. Make sure that you also have a desktop tab open.
 import os
-if 'BINDER_SERVICE_HOST' in os.environ:
+if 'BINDER_SERVICE_HOST' in os.environ or 'NEBARI_JUPYTERHUB_SSH_SERVICE_HOST' in os.environ:
     os.environ['DISPLAY'] = ':1.0'
 ```
+
+## Getting started
 
 We start by importing `napari`, our `nbscreenshot` utility and instantiating an empty viewer.
 

@@ -21,14 +21,14 @@ In this module, we will implement elements of our previous workflow as functions
 
 This notebook converts the exploratory analysis of the previous notebook, [Exploratory analysis: spot detection](spot_detection_basic), and makes it more reproducible by 1. turning the workflow info functions, and 2. using `magicgui` to create widgets that can be used in the napari GUI. This can then serve as the basis for a napari plugin!
 
-## `binder` setup
+## `Nebari` and `Binder` setup
 
 ```{code-cell} ipython3
 :tags: [remove-output]
 
-# this cell is required to run these notebooks on Binder. Make sure that you also have a desktop tab open.
+# this cell is required to run these notebooks in the cloud. Make sure that you also have a desktop tab open.
 import os
-if 'BINDER_SERVICE_HOST' in os.environ:
+if 'BINDER_SERVICE_HOST' in os.environ or 'NEBARI_JUPYTERHUB_SSH_SERVICE_HOST' in os.environ:
     os.environ['DISPLAY'] = ':1.0'
 ```
 

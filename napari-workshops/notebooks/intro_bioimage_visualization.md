@@ -50,14 +50,14 @@ You can (and are encouraged to!) extend `napari` using custom [key bindings](htt
 
 Learn more about napari at [napari.org](https://napari.org/), including our [tutorials](https://napari.org/usage.html), our [API documentation](https://napari.org/api/index.html) and our [mission and values](https://napari.org/community/mission_and_values.html).
 
-## (Optional) Preparing to run this notebook on mybinder.org
+## (Optional) Running in the cloud: `Nebari` and `Binder` setup
 
 ```{code-cell} ipython3
 :tags: [remove-output]
 
-# this cell is required to run these notebooks on Binder. Make sure that you also have a desktop tab open.
+# this cell is required to run these notebooks in the cloud. Make sure that you also have a desktop tab open.
 import os
-if 'BINDER_SERVICE_HOST' in os.environ:
+if 'BINDER_SERVICE_HOST' in os.environ or 'NEBARI_JUPYTERHUB_SSH_SERVICE_HOST' in os.environ:
     os.environ['DISPLAY'] = ':1.0'
 ```
 
