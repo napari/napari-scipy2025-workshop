@@ -15,7 +15,7 @@ chapters:
   - file: notebooks/interactive_analysis
   # - file: notebooks/spot_detection
   # - file: notebooks/segmenting_and_measuring_nuclei_stardist
-  - file: notebooks/event_handlers_and_widget
+  - file: notebooks/image_warping
   - file: notebooks/manual_annotation
   - file: notebooks/custom_colormaps
   - file: notebooks/alternative_notebooks
