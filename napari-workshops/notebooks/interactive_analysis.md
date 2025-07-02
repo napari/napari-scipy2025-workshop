@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.17.1
+    jupytext_version: 1.16.7
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -51,7 +51,7 @@ nuclei = imread('data/nuclei.tif')
 viewer.add_image(nuclei)
 ```
 
-However, here, for simplicity, we will use the [`cells3d` dataset, provided by scikit-image](https://scikit-image.org/docs/stable/api/skimage.data.html#skimage.data.cells3d). 
+However, here, for simplicity, we will use the [`cells3d` dataset, provided by scikit-image](https://scikit-image.org/docs/stable/api/skimage.data.html#skimage.data.cells3d).
 
 ```{code-cell} ipython3
 from skimage.data import cells3d
@@ -62,7 +62,7 @@ membranes = image_data[:, 0, :, :]
 nuclei = image_data[:, 1, :, :]
 ```
 
-Further, we will compute a maximum intensity projection of the nuclei data, reducing the dimensionality of the data from 3D to 2D, prior to adding the image to the viewer.  
+Further, we will compute a maximum intensity projection of the nuclei data, reducing the dimensionality of the data from 3D to 2D, prior to adding the image to the viewer.
 
 ```{code-cell} ipython3
 print('Shape of nuclei array: ', nuclei.shape)

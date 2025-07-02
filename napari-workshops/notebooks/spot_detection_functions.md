@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.16.1
+    jupytext_version: 1.16.7
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -159,7 +159,7 @@ Press the `Run` button and you will see that a new Image layer is added with the
 function—again thanks to autogeneration from `magicgui`.
 
 ```{code-cell} ipython3
-:tags: ["hide-output"]
+:tags: [hide-output]
 
 # we'll call the widget to simulate clicking `Run`
 gaussian_high_pass(viewer.layers['spots'].data)
@@ -359,7 +359,7 @@ viewer.window.add_dock_widget(detect_spots)
 ```
 
 ```{code-cell} ipython3
-:tags: ["hide-output"]
+:tags: [hide-output]
 
 # let's call the widget/function to simulate pressing run
 detect_spots(viewer.layers['spots'])
@@ -399,7 +399,6 @@ from napari.layers import Points
 @Points.bind_key("Shift-D")
 def print_number_of_points(points_layer: "napari.layers.Points"):
     print("Detected points: ", len(points_layer.data))
-
 ```
 
 Give it a shot in the viewer, you should get a print statement in the notebook, when you press the 
@@ -411,6 +410,7 @@ viewer itself, you can use [`napari.utils.notifications.show_info`](https://napa
 ```
 
 Let's call the function to trigger it for the notebook:
+
 ```{code-cell} ipython3
 print_number_of_points(viewer.layers['Points'])
 ```

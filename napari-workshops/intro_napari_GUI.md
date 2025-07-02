@@ -26,14 +26,11 @@ napari
 
 ````{note}
 If you are using [the Binder cloud setup](docs/launching_binder.md), then in the Binder Jupyter lab interface, you can open a Desktop in a browser tab using the `D` "Desktop" tile and then open a Terminal session using the `$_` "Terminal" tile. In this terminal, you can launch napari in the Desktop browser tab using the command:
-
 ```bash
 DISPLAY=:1.0 napari
 ```
-
 You will then be able to proceed with the rest of the instructions on this page.
 ````
-
 
 After a few seconds (or up to a minute if it's the first launch and you have various security and antivirus software installed), you will get the `viewer` window, which is annotated below:
 
@@ -110,16 +107,12 @@ It is second from the left end on the row of viewer buttons.
 
         ```
 
-## Explore Layer Types  
+## Explore the Labels layer
 
-The Points, Shapes, and Labels layers can be used for annotating you image layers and are accessible 
-through the GUI buttons. Additional data layers (Surfaces, Tracks, and Vectors) are available through 
-the API. For guides to using the various layer types, please see the [napari layer guides](https://napari.org/stable/howtos/layers/index.html).
-
-
-* Add a points, shapes, or labels layer using the buttons above the layers list.
-    * These layers will be blank to begin with.  
-    * In 2D mode, use the layer controls to add points, draw some shapes, or paint some labels on your image (referring to points, shapes, and labels layers respectively).
+* Add a labels layer using the third button from the left above the layers list.
+    * This layer will be blank to begin with. 
+    * With the new Labels layer selected, find the paintbrush button at the top of the layer controls.
+    * Paint some labels on your image. Change the colour (and by extension, integer ID of the label) using the spinner in the layer controls.
 * Re-order the layer list by dragging a selected layer in the list below another. Depending on the blending and opacity settings, this will change the visualization!
 
 ```{tip}
@@ -127,6 +120,10 @@ You can delete layers selected individually using the trash can icon or by press
 Delete all layers in the layer list by selecting one layer, and then pressing Command+A (Mac) / Control+A (Windows and Linux) to select all layers. Then click the trash can button on the top right of the layer list. 
 
 ```
+
+The Points and Shapes layers can also be used for annotating you image layers and are accessible 
+through the GUI buttons. Additional data layers (Surfaces, Tracks, and Vectors) are available through 
+the API. For guides to using the various layer types, please see the [napari layer guides](https://napari.org/stable/howtos/layers/index.html).
 
 ## Save your data
 
@@ -161,19 +158,6 @@ individual layers (as described above) *to a folder.*
     ```{important} 
     To re-open the files, open the enclosing folder, select all the files, and drag-n-drop them on the napari canvas. At present, opening the folder directly, if it contains a mix of layer types, will not work—only images are supported in this way. Note that a folder of images will be imported as a stack.
     ```
-
-## The Preferences/Settings
-
-Here you can customize the behavior of napari, e.g. keybindings, as well as
-the look (e.g. themes).
-* Access the Settings on Windows/Linux in the **File** menu or the Preferences in the **napari** menu on macOS
-![Preferences/Settings window](resources/preferences.png)
-    * Be sure and check the extensive, editable keyboard shortcuts!
-
-```{note}
-- Preferences/Settings are stored *per Python environment*. 
-- They can reset using `napari --reset` in the terminal
-```
 
 ## Use the integrated Python console to interact with the viewer
 
@@ -230,3 +214,16 @@ viewer?
 ```
 
 ````
+
+## The Preferences/Settings
+
+Here you can customize the behavior of napari, e.g. keybindings, as well as
+the look (e.g. themes).
+* Access the Settings on Windows/Linux in the **File** menu or the Preferences in the **napari** menu on macOS
+![Preferences/Settings window](resources/preferences.png)
+    * Be sure and check the extensive, editable keyboard shortcuts!
+
+```{note}
+- Preferences/Settings are stored *per Python environment*. 
+- They can reset using `napari --reset` in the terminal
+```
