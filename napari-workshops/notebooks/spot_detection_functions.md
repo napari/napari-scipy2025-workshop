@@ -435,9 +435,9 @@ Try to implement a widget or keybinding on your own! If you have something that 
 
 * Replace the blob-log detector with a different one, e.g., [`skimage.feature.peak_local_max`](https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.peak_local_max), [`skimage.feature.blob_dog`](https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.blob_dog), etc. You can find some ideas in the [scikit-image feature detection documentation](https://scikit-image.org/docs/stable/auto_examples/features_detection/plot_blob.html).
 
-* Extend either of the two examples above to the full Layer, rather just the data array, and then make it so that the returned Layer uses (some of) visualization parameters of the original layer. This will require using the `LayerDataTuple` return type.
+* Extend either of the two examples above to the full Layer, rather just the data array, and then make it so that the returned Layer uses (some of) the visualization parameters of the original layer. This will require using the `LayerDataTuple` return type.
 
-* Add a keybinding to trigger running either of the two widgets above. Consider what to attach the keybinding to: the viewer? a Layer type? a specific layer? Try to make the keybinding not to be to "fragile", in other words, consider what happens if the user has modified the layer list significantly!
+* Add a keybinding to trigger running either of the two widgets above. Consider what to attach the keybinding to: the viewer? a Layer type? a specific layer? Try to ensure the keybinding is not too "fragile", in other words, consider what happens if the user has modified the layer list significantly!
 
 ## Conclusions
 
