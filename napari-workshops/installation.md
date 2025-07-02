@@ -2,13 +2,21 @@
 
 # napari installation
 
+```{tip}
+For the best experience, we recommend installing and running napari on your local machine. 
+However, if you prefer to not install anything locally, you can run the workshop in the cloud: 
+
+* If you are at SciPy 2025, you can use the SciPy 2025 Nebari JupyterHub instance to run everything in the cloud. For instructions, please see [our Nebari guide](nebari).  
+
+* If the Nebari instace is no longer available, you also have the option of [running everything in the cloud using Binder](docs/launching_binder.md). Please note that performance, particularly 3D rendering, will be severely limited on this free resource!
+```
+
 napari is a Python application and package, so it requires a working Python installation.
 There are multiple ways that Python installations and packages can be managed. For a detailed
 breakdown, we recommend [this excellent guide and tutorial by Talley Lambert (Harvard Medical School)](https://hackmd.io/@talley/SJB_lObBi).
 
 ```{important}
-For the purposes of this workshop, for consistency, we will use [`conda`](https://docs.conda.io/en/latest/) as the Python, package, and environment manager. However, you can use your own, preferred method to install `napari`, `PyQt5`, and `jupyterlab` into a virtual environment with Python 3.12. Please refer to the [napari installation documentation](https://napari.org/stable/tutorials/fundamentals/installation.html).
-If you prefer to not install anything locally, you can try [running everthing in the cloud using Binder](docs/launching_binder.md). Please note that performance, particularly 3D rendering, will be limited due to lack of dedicated GPU acceleration.
+For the purposes of this workshop, for consistency, we will use [`conda`](https://docs.conda.io/en/latest/) as the Python, package, and environment manager. However, you can use your own, preferred method to install `napari`, `PyQt5`, and `jupyterlab` into a virtual environment with Python 3.12. Please refer to the [napari installation documentation](https://napari.org/stable/tutorials/fundamentals/installation.html).  
 ```
 
 ## Installing Python using `conda`
