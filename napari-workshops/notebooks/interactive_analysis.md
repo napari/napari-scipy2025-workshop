@@ -4,12 +4,13 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.14.0
+    jupytext_version: 1.16.7
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
   name: python3
 ---
+
 (interactive-analysis)=
 
 # notebook: interactive analysis
@@ -17,15 +18,18 @@ One need for bioimage analysts is to interactively perform analysis on images. T
 
 **[napari](https://napari.org/)** makes such interactive analyses easy because of its easy coupling with Python and the Scientific Python ecosystem, including tools like **[numpy](https://numpy.org/)** and **[scikit-image](https://scikit-image.org/)**.
 
-## Setup
+## `Nebari` and `Binder` setup
 
 ```{code-cell} ipython3
 :tags: [remove-output]
-# this cell is required to run these notebooks on Binder. Make sure that you also have a desktop tab open.
+
+# this cell is required to run these notebooks in the cloud. Make sure that you also have a desktop tab open.
 import os
-if 'BINDER_SERVICE_HOST' in os.environ:
+if 'BINDER_SERVICE_HOST' in os.environ or 'NEBARI_JUPYTERHUB_SSH_SERVICE_HOST' in os.environ:
     os.environ['DISPLAY'] = ':1.0'
 ```
+
+## Getting started
 
 We start by importing `napari`, our `nbscreenshot` utility and instantiating an empty viewer.
 
@@ -37,14 +41,36 @@ from napari.utils import nbscreenshot
 viewer = napari.Viewer()
 ```
 
-Let's read the original image from previous lessons, take a maximum projection, and view it in napari:
+There are multiple ways of reading image data into napari: drag-and-drop, **File > Open**, or programmatic reading.  
+For example, we could explicitly load a 3D image using the `tifffile` library and then use the `add_image()` method of our existing `Viewer` object named `viewer`. This approach allows you to load data into napari even if a Reader plugin doesn't exist for that file format!
 
-```{code-cell} ipython3
+```Python
+import napari
 from tifffile import imread
 
-# load the image data and inspect its shape
-nuclei_mip = imread('data/nuclei.tif').max(axis=0)
-print(nuclei_mip.shape)
+# load the image data using tifffile
+nuclei = imread('data/nuclei.tif')
+viewer.add_image(nuclei)
+```
+
+However, here, for simplicity, we will use the [`cells3d` dataset, provided by scikit-image](https://scikit-image.org/docs/stable/api/skimage.data.html#skimage.data.cells3d).
+
+```{code-cell} ipython3
+from skimage.data import cells3d
+
+image_data = cells3d()  # shape (60, 2, 256, 256)
+
+membranes = image_data[:, 0, :, :]
+nuclei = image_data[:, 1, :, :]
+```
+
+Further, we will compute a maximum intensity projection of the nuclei data, reducing the dimensionality of the data from 3D to 2D, prior to adding the image to the viewer.
+
+```{code-cell} ipython3
+print('Shape of nuclei array: ', nuclei.shape)
+# calculate max projection using numpy method
+nuclei_mip = nuclei.max(axis=0)
+print('Shape of max projection of nuclei: ', nuclei_mip.shape)
 ```
 
 ```{code-cell} ipython3
@@ -92,6 +118,7 @@ from skimage import morphology
 from skimage import feature
 from skimage import measure
 from skimage import segmentation
+from skimage import util 
 from scipy import ndimage
 import numpy as np
 ```
@@ -149,15 +176,13 @@ Now we can try to identify the centers of each of the nuclei by finding peaks of
 ```{code-cell} ipython3
 peak_local_max = feature.peak_local_max(
     smoothed_distance,
-    footprint=np.ones((7, 7), dtype=bool),
-    indices=False,
-    labels=measure.label(foreground_processed)
+    min_distance=7,
+    exclude_border=False
 )
-peaks = np.nonzero(peak_local_max)
 ```
 
 ```{code-cell} ipython3
-viewer.add_points(np.array(peaks).T, name='peaks', size=5, face_color='red');
+viewer.add_points(peak_local_max, name='peaks', size=5, face_color='red');
 ```
 
 ```{code-cell} ipython3
@@ -176,11 +201,8 @@ viewer.layers['peaks'].remove_selected()
 Based on those peaks we can now seed the watershed algorithm which will find the nuclei boundaries.
 
 ```{code-cell} ipython3
-new_peaks = np.round(viewer.layers['peaks'].data).astype(int).T
-seeds = np.zeros(nuclei_mip.shape, dtype=bool)
-seeds[(new_peaks[0], new_peaks[1])] = 1
+markers = util.label_points(viewer.layers['peaks'].data, output_shape=viewer.layers['nuclei_mip'].data.shape)
 
-markers = measure.label(seeds)
 nuclei_segmentation = segmentation.watershed(
     -smoothed_distance, 
     markers, 
@@ -242,7 +264,7 @@ nbscreenshot(viewer)
 @viewer.bind_key('Shift-P')
 def process_foreground(viewer):
     data = viewer.layers['threshold result'].data
-    data_processed = morphology.remove_small_holes(data, 60)
+    data_processed = morphology.remove_small_holes(np.bool(data), 60)
     data_processed = morphology.remove_small_objects(data_processed, min_size=50)
     viewer.layers['threshold result'].data = data_processed
 ```
@@ -271,15 +293,11 @@ def complete_segmentation(viewer):
     smoothed_distance = filters.gaussian(distance, 10)
     peak_local_max = feature.peak_local_max(
         smoothed_distance,
-        footprint=np.ones((7, 7), dtype=bool),
-        indices=False,
-        labels=measure.label(foreground)
+        min_distance=7,
+        exclude_border=False
     )
-    peaks = np.nonzero(peak_local_max)
-    seeds = np.zeros(smoothed_distance.shape, dtype=bool)
-    seeds[(peaks[0], peaks[1])] = 1
+    markers = util.label_points(peak_local_max, output_shape=foreground.data.shape)
 
-    markers = measure.label(seeds)
     nuclei_segmentation = segmentation.watershed(
         -smoothed_distance, 
         markers, 

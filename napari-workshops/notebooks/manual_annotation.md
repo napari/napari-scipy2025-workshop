@@ -22,16 +22,18 @@ There are 3 main types of manual annotation that napari provides, each correspon
 
 This tutorial will explore these three manual annotations in napari, using the same data from the [Bioimage visualization in Python tutorial](intro_bioimage_visualization.md). Once again, we will try to highlight the bidirectional communication between the viewer and the Python kernel.
 
-## Setup
+## `Nebari` and `Binder` setup
 
 ```{code-cell} ipython3
 :tags: [remove-output]
 
-# this cell is required to run these notebooks on Binder. Make sure that you also have a desktop tab open.
+# this cell is required to run these notebooks in the cloud. Make sure that you also have a desktop tab open.
 import os
-if 'BINDER_SERVICE_HOST' in os.environ:
+if 'BINDER_SERVICE_HOST' in os.environ or 'NEBARI_JUPYTERHUB_SSH_SERVICE_HOST' in os.environ:
     os.environ['DISPLAY'] = ':1.0'
 ```
+
+## Getting started
 
 We start by importing `napari`, our `nbscreenshot` utility and instantiating an empty viewer
 

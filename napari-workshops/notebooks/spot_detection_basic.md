@@ -18,7 +18,8 @@ In this activity, we will perform spot detection on some in situ sequencing data
 ([Feldman and Singh et al., Cell, 2019](https://www.cell.com/cell/fulltext/S0092-8674(19)31067-0s)).
 In doing so, we will combine methods from [scipy](https://www.scipy.org/) and
 [scikit-image](https://scikit-image.org/). The goal is to familiarize you with
-performing analysis that integrates the scientific python ecosystem and napari.
+performing analysis that integrates the scientific python ecosystem and napari.  
+This notebook also serves as the basis and motivation for the next notebook: [From workflow to widget: customizing napari](spot_detection_functions).
 
 ## Data source
 
@@ -30,14 +31,14 @@ The data were downloaded from the
 Following this activity, we will use the workflow generated in this activity to
 create a napari spot detection widget or even plugin.
 
-## `binder` setup
+## `Nebari` and `Binder` setup
 
 ```{code-cell} ipython3
 :tags: [remove-output]
 
-# this cell is required to run these notebooks on Binder. Make sure that you also have a desktop tab open.
+# this cell is required to run these notebooks in the cloud. Make sure that you also have a desktop tab open.
 import os
-if 'BINDER_SERVICE_HOST' in os.environ:
+if 'BINDER_SERVICE_HOST' in os.environ or 'NEBARI_JUPYTERHUB_SSH_SERVICE_HOST' in os.environ:
     os.environ['DISPLAY'] = ':1.0'
 ```
 

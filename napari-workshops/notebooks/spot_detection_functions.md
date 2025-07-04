@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.16.1
+    jupytext_version: 1.16.7
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -19,20 +19,22 @@ There are a number of ways to go about creating your own widgets, you can see [a
 
 In this module, we will implement elements of our previous workflow as functions and then use [`magicgui.magicgui`](https://pyapp-kit.github.io/magicgui/api/magicgui/#magicguimagicgui) decorator on those functions to return us compound widgets that we can use to make exploring the parameters easier in the GUI. For a nice overview of the `magicgui` decorators, see [the official documentation](https://pyapp-kit.github.io/magicgui/decorators/).
 
-## `binder` setup
+This notebook converts the exploratory analysis of the previous notebook, [Exploratory analysis: spot detection](spot_detection_basic), and makes it more reproducible by 1. turning the workflow info functions, and 2. using `magicgui` to create widgets that can be used in the napari GUI. This can then serve as the basis for a napari plugin!
+
+## `Nebari` and `Binder` setup
 
 ```{code-cell} ipython3
 :tags: [remove-output]
 
-# this cell is required to run these notebooks on Binder. Make sure that you also have a desktop tab open.
+# this cell is required to run these notebooks in the cloud. Make sure that you also have a desktop tab open.
 import os
-if 'BINDER_SERVICE_HOST' in os.environ:
+if 'BINDER_SERVICE_HOST' in os.environ or 'NEBARI_JUPYTERHUB_SSH_SERVICE_HOST' in os.environ:
     os.environ['DISPLAY'] = ':1.0'
 ```
 
 ## Loading data
 
-Let's get everything set up, based on the previous notebook:
+Let's get everything set up, loading the remote data as in the [Exploratory analysis: spot detection](spot_detection_basic) notebook.
 
 ```{code-cell} ipython3
 from skimage import io
@@ -61,7 +63,7 @@ viewer.add_image(spots, colormap = 'I Orange', blending='minimum')
 ## A basic filtering function
 
 Now let's write a function that takes an array and a `sigma` value and performs the 
-high-pass operation.
+high-pass operation. The goal is to remove some of the background signal and possible autofluorescence.
 
 ```{code-cell} ipython3
 import numpy as np
@@ -74,7 +76,7 @@ def gaussian_high_pass(image, sigma):
     return high_passed_im
 ```
 
-We can test our function, in similar fashion as before:
+We can test our function, by calling in with the `spots` array as the input data and a `sigma` value of 2, followed by adding the result to the viewer as a new image layer.
 
 ```{code-cell} ipython3
 high_passed_spots = gaussian_high_pass(spots, 2)
@@ -85,6 +87,8 @@ viewer.add_image(high_passed_spots, colormap="I Blue", blending="minimum")
 ```{code-cell} ipython3
 nbscreenshot(viewer)
 ```
+
+To test on other input images or use different sigma values, we would have to repeat this process, which is somewhat annoying. A widget that allows us to select the input image and change the sigma value would be much more convenient.
 
 ## Obtaining a basic widget using the `@magicgui` decorator
 
@@ -148,20 +152,22 @@ nbscreenshot(viewer)
 ```
 
 Notice that because we told `magicgui` that our function will use not just any numpy array, but 
-specifically `ImageData`—the data of an Image layer—and that it will also return that, `magicgui`
-generated UI widgets for selecting an Image layer--if you add another layer type, it won't show
+specifically `ImageData`---the data of a `napari` Image layer---and that it will also return that same type, `magicgui`
+generated UI widgets for selecting an Image layer---if you add a different layer type, it won't show
 up in the dropdown!
 Press the `Run` button and you will see that a new Image layer is added with the results of our
 function—again thanks to autogeneration from `magicgui`.
 
 ```{code-cell} ipython3
-:tags: ["hide-output"]
+:tags: [hide-output]
 
 # we'll call the widget to simulate clicking `Run`
 gaussian_high_pass(viewer.layers['spots'].data)
 ```
 
-Note that we are just returning `ImageData`, so there is no information passed about colormaps, blending, etc. If we want to specify that, we would need to annotate as [`LayerDataTuple`](https://napari.org/stable/guides/magicgui.html#returning-napari-types-layerdatatuple). (We will do this in the next example.)
+```{important}
+Because we are just returning `ImageData`, there is no information passed about colormaps, blending, etc. If we want to specify that, we would need to annotate as [`LayerDataTuple`](https://napari.org/stable/guides/magicgui.html#returning-napari-types-layerdatatuple). (We will do this in the next example.)
+```
 For now you will need to manually or programmatically set any colormap/blending settings. (Let's also hide the previous filtering output.)
 
 ```{code-cell} ipython3
@@ -179,10 +185,10 @@ you can change the `sigma` value and see the updated result.
 
 ```{tip}
 Hover over the labels `image` and `sigma` -- the names of the parameters we passed to the function.
-You should see tooltips with the docstring information! How cool is that?
+You should see tooltips with the docstring information! How cool is that? More *magic* from `magicgui`!
 ```
 
-Our `gaussian_high_pass` object *is the widget*, so we can easily get the value of the current setting:
+Our `magicgui` decorated `gaussian_high_pass` object *is the widget*, so we can easily get the value of the current setting:
 
 ```{code-cell} ipython3
 gaussian_high_pass.sigma.value
@@ -265,10 +271,10 @@ nbscreenshot(viewer)
 
 ## A more complex example
 
-Finally, lets make a widget for the whole workflow as a function. We will need to write a function
-and then properly annotate it such that `magicgui` can generate the widgets. This time we are also
-starting with image layer (data), but then we want a Points layer with points. We could again return 
-just the layer data using `napari.types.PointsData`. But lets get a nicer Points layer instead, so 
+Finally, lets make a widget for the whole workflow developed in the [Exploratory analysis: spot detection](spot_detection_basic) 
+notebook as a function. We will need to write a function and then properly annotate it such that `magicgui` can generate the widgets. 
+This time we are also starting with image layer (data), but then we want a Points layer with points. We could again return 
+just the layer data using `napari.types.PointsData`. However, we would like some control over the Points layer visualization, so 
 we will return a LayerDataTuple.  
 
 If `detect_spots()` returns a `LayerDataTuple`, napari will add a *new layer* to
@@ -353,7 +359,7 @@ viewer.window.add_dock_widget(detect_spots)
 ```
 
 ```{code-cell} ipython3
-:tags: ["hide-output"]
+:tags: [hide-output]
 
 # let's call the widget/function to simulate pressing run
 detect_spots(viewer.layers['spots'])
@@ -393,7 +399,6 @@ from napari.layers import Points
 @Points.bind_key("Shift-D")
 def print_number_of_points(points_layer: "napari.layers.Points"):
     print("Detected points: ", len(points_layer.data))
-
 ```
 
 Give it a shot in the viewer, you should get a print statement in the notebook, when you press the 
@@ -402,11 +407,10 @@ keybinding with a Points layer selected, but not with any other layer type.
 ```{tip}
 We used `print`, so the output ends up in the notebook (or the terminal, REPL, etc.). To get something visible in the 
 viewer itself, you can use [`napari.utils.notifications.show_info`](https://napari.org/dev/api/napari.utils.notifications.html).
-However, be aware that this won't work when napari was launched from a Jupyter notebook (hopefully fixed in napari 0.5.0): nothing will
-happen.
 ```
 
 Let's call the function to trigger it for the notebook:
+
 ```{code-cell} ipython3
 print_number_of_points(viewer.layers['Points'])
 ```
@@ -419,6 +423,21 @@ Worse yet, this will silently fail, because the builtin napari keybinding *will*
 There are actually a number of other events that you can connect callbacks to, other than just key presses.
 For more information, see the [napari events documentation](https://napari.org/stable/howtos/connecting_events.html).
 
+## Suggestions for further exploration
+
+Try to implement a widget or keybinding on your own! If you have something that interests you, see if you can implement it in napari---feel free to use your own data, a different sample file! Otherwise, working with this notebook, here are a few things you can try to implement that we came up with:
+
+* Replace the default float SpinBox widgets with sliders in final detect_spots function/widget.
+
+* Convert one of the widgets above to use [`@magic_factory`](https://pyapp-kit.github.io/magicgui/decorators/#magic_factory) instead of `@magicgui`. How does the usage/behavior change?
+
+* Create a widget that lets the user pick from a number of different filters, see [skimage.filters](https://scikit-image.org/docs/0.25.x/api/skimage.filters.html) for ideas. It might be easiest to use an [`enum`](https://docs.python.org/3/library/enum.html#enum.Enum) for this, that contains multiple different filters, so that `magicgui` creates a dropdown that allows you to select them.
+
+* Replace the blob-log detector with a different one, e.g., [`skimage.feature.peak_local_max`](https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.peak_local_max), [`skimage.feature.blob_dog`](https://scikit-image.org/docs/stable/api/skimage.feature.html#skimage.feature.blob_dog), etc. You can find some ideas in the [scikit-image feature detection documentation](https://scikit-image.org/docs/stable/auto_examples/features_detection/plot_blob.html).
+
+* Extend either of the two examples above to the full Layer, rather just the data array, and then make it so that the returned Layer uses (some of) the visualization parameters of the original layer. This will require using the `LayerDataTuple` return type.
+
+* Add a keybinding to trigger running either of the two widgets above. Consider what to attach the keybinding to: the viewer? a Layer type? a specific layer? Try to ensure the keybinding is not too "fragile", in other words, consider what happens if the user has modified the layer list significantly!
 
 ## Conclusions
 
