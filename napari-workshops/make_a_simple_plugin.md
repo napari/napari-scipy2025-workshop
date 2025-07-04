@@ -15,6 +15,9 @@ The primary steps in making a napari plugin are as follows:
 
 In the following sections, we will work through steps (1) - (3).
 To set up a minimal plugin, you can read the ["Your first plugin"](https://napari.org/dev/plugins/building_a_plugin/first_plugin.html#your-first-plugin) tutorial on napari.org.
+A functional napari plugin only needs 4 files to be shared with the community,
+but you will find many other helpful files in the template that make plugins
+easier to develop and maintain.
 For step (4), you can refer to the [in depth plugin tutorial](https://www.youtube.com/watch?v=NL-VywidzXE),
 or [the deploy instructions on napari.org](https://napari.org/dev/plugins/building_a_plugin/index.html#[plugin-test-deploy]).
 
@@ -91,7 +94,11 @@ uv tool run --with jinja2-time --with npe2 copier copy --trust https://github.co
 ```
 
 You will be asked for some information to customize the setup of your plugin.
-Each prompt gives the default value in square brackets (`[]`). Enter your answer after the prompt and press enter to continue.
+Each prompt gives the default value in square brackets (`[]`). Enter your answer
+after the prompt and press enter to continue. When prompted for which plugins
+to include, you only need to answer `Yes` to `Include widget plugin?`,
+but you may be interested in exploring the other contributions as well.
+
 To read more about the prompts, you can refer to the `napari-plugin-template`
 [Prompts Reference](https://github.com/napari/napari-plugin-template/blob/main/PROMPTS.md)
 After completing all of the questions, a directory will be created containing
@@ -105,7 +112,7 @@ organized as follows.
 ```text
 napari-spot-detector
 ├── .github
-|   ├── ISSUE TEMPLATE
+|   ├── ISSUE_TEMPLATE
 |   |   ├── bug_report.yml
 │   |   ├── documentation.md
 │   |   ├── feature_request.md
@@ -178,7 +185,7 @@ napari can infer the correct GUI elements to add to our plugin.
 3. You should now see your plugin directory in the "Explorer" pane in the left
    hand side of the window. You can double click on folders to expand them and
    files to open them in the editor.
-4. Open the `<module_name>/_widget.py` file using VSCode by double clicking on
+4. Open the `src/<module_name>/_widget.py` file using VSCode by double clicking on
    it in the "Explorer" pane.
 5. You will see that it has already been populated with a few code blocks by
    the template.
@@ -188,7 +195,9 @@ napari can infer the correct GUI elements to add to our plugin.
        from typing import TYPE_CHECKING
 
        from magicgui import magic_factory
+       from magicgui.widgets import CheckBox, Container, create_widget
        from qtpy.QtWidgets import QHBoxLayout, QPushButton, QWidget
+       from skimage.util import img_as_float
 
        if TYPE_CHECKING:
            import napari
