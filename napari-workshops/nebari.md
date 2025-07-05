@@ -26,7 +26,10 @@ Now that our desktop is set up, we can proceed to running code!
 
 ## Run workshop notebooks
 
-To access the workshop materials, you can select the workshop repository in the Tutorials section of the JupyterLab Launcher or you can clone the repository using the Git integration in the left-most sidebar and clicking the "Clone a Repository" button.
+To access the workshop materials, you can select the workshop repository in the Tutorials section of the JupyterLab Launcher "Create custom image visualization and analysis tools with napari".  
+
+Alternately, you can use the Git integration in the left-most sidebar and clicking the "Clone a Repository" button.
+
 
 ![Nebari JupyterHub Git integration](resources/nebari-git-integration.png)
 
