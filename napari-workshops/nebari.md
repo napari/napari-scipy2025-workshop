@@ -8,7 +8,7 @@ To get started, log into the SciPy 2025 Nebari instance following the instructio
 If the conference has already ended, but you still want to run this workshop in the cloud, please see our [Binder instructions](docs/launching_binder.md).
 ```
 
-Once logged in to Nebari, click on the JupyterLab card to open the JupyterLab interface. You will be prompted to select an instance type. Please select the instance labled `Medium Instance (MyST)`; we will not be leveraging GPU acceleration.
+Once logged in to Nebari, click on the JupyterLab card to open the JupyterLab interface. You will be prompted to select an instance type. Please select the instance labeled `Medium Instance (MyST)`; we will not be leveraging GPU acceleration.
 
 ## Open a desktop tab
 
