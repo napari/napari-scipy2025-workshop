@@ -10,6 +10,7 @@ chapters:
 - file: intro_napari_GUI
 - file: plugins
 - file: notebooks/spot_detection_functions
+- file: notebooks/image_warping
 - file: make_a_simple_plugin
 - file: notebooks/index
   sections:
