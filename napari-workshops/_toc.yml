@@ -9,18 +9,12 @@ chapters:
 - file: nebari
 - file: intro_napari_GUI
 - file: plugins
+- file: notebooks/spot_detection_functions
+- file: notebooks/image_warping
+- file: make_a_simple_plugin
 - file: notebooks/index
   sections:
   - file: notebooks/intro_bioimage_visualization
-  - file: notebooks/interactive_analysis
-  # - file: notebooks/spot_detection
-  # - file: notebooks/segmenting_and_measuring_nuclei_stardist
-  - file: notebooks/image_warping
   - file: notebooks/manual_annotation
-  - file: notebooks/custom_colormaps
-  - file: notebooks/alternative_notebooks
-    sections:
-    - file: notebooks/spot_detection_basic
-    - file: notebooks/spot_detection_functions
-
-- file: make_a_simple_plugin
+  - file: notebooks/interactive_analysis
+  - file: notebooks/spot_detection_basic
