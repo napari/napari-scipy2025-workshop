@@ -67,7 +67,7 @@ moving_points_layer = viewer.add_points(src.copy(), name='moving_points')
 We now need a function to do the warping! Inspired by this excellent [scikit-image example](https://scikit-image.org/docs/stable/auto_examples/transform/plot_tps_deformation.html), we will use thin-plate splines to deform our image. We want to take the original image data, the unmoved source points, and the new coordinates of the destination points. Using the two different sets of points, we'll estimate the required transformation, and then apply this transformation to the original image data. Once we've done the transformation, we'll change the data of the image layer **in-place**, so that the image layer is always showing the latest warped version.
 
 ```{code-cell} ipython3
-def warp(im_layer, src, dst):
+def warp(im_layer: 'napari.layers.Image', src: 'np.ndarray', dst: 'np.ndarray') -> None:
     """
     Warp image using thin-plate spline transformation.
 
@@ -76,6 +76,8 @@ def warp(im_layer, src, dst):
     apply the warping to the original image data, replacing
     the image layer data in-place.
 
+    Parameters
+    ----------
     im_layer: napari Image layer to display the warped data
     src: array of source points
     dst: array of destination points
@@ -87,6 +89,20 @@ def warp(im_layer, src, dst):
     # multiple by 255 to get it back to the same range
     # as the original data
     im_layer.data = (warped * 255).astype(image.dtype)
+```
+
+We can run this function without any GUI interaction by passing in the `checkerboard_image_layer`, the `src` points array and then a copy of the `src` array with some modified points. Note that this will warp our image, but won't actually move the points in the viewer!
+
+```{code-cell} ipython3
+dest_points = src.copy()
+dest_points[0] = [40, 40]
+warp(checkerboard_image_layer, src, dest_points)
+```
+
+Let's reset our image layer data for the next step.
+
+```{code-cell} ipython3
+checkerboard_image_layer.data = image
 ```
 
 Now that we have the function that does the warping, and replaces the layer data, we want to call this function whenever a point's location in the layer has changed. To know when a point has changed, we want to connect to the layer's `data` event. This event will be emitted whenever the data of layer has seen any kind of change: a point has been added or deleted, the data has been replaced with a new array, and, importantly for us, a point has been moved from its original location.
@@ -116,6 +132,10 @@ def warp_on_point_changed(event):
 ```
 
 Now that we have our callback, we just need to hook it up to the layer event. This is a pretty simple one-liner. Run the cell below, select your `moving_points` layer, click the `Select points` button in the layer controls (third from the left), and then move one of the points. Once you release the mouse button, you should see your image warp. Pretty slick!
+
+```{code-cell} ipython3
+moving_points_layer.events.data.connect(warp_on_point_changed)
+```
 
 But it could be slicker... What if we could see the image warp as we moved the point, rather than just on mouse release? This is possible in `napari` with mouse callbacks, which we'll cover in the next example. However before we move on, let's disconnect our callback from the data event. It's always good practice to clean up your callbacks once you're done with them. Leaving them connected can lead to unintended side effects, and potentially cause a slow-down in the viewer.
 
@@ -163,7 +183,7 @@ checkerboard_image_layer.mouse_drag_callbacks.remove(some_mouse_callback)
 
 Let's edit our callback to pass the correct information to the `warp` function when the mouse is dragged.
 
-To pass the right information to the callback, we inspect the `selected_data` attribute of our `points_layer`, which contains the indices of all currently selected points. This example only works when one point is selected, so we just grab the first one. We make a copy of the `dst` points before updating the coordinates of the selected point to the current mouse position, to avoid messing with the layer data itself. Finally, we call the same warping function as in our layer event example.
+To pass the right information to the callback, we inspect the `selected_data` attribute of our `points_layer`, which contains the indices of all currently selected points. This example only works when one point is selected, so we just grab the last one (since that's probably what the mouse is hovering over!). We make a copy of the `dst` points before updating the coordinates of the selected point to the current mouse position, to avoid messing with the layer data itself. Finally, we call the same warping function as in our layer event example.
 
 ```{code-cell} ipython3
 def warp_on_move(points_layer, event):
