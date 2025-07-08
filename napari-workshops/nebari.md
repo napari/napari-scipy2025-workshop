@@ -8,7 +8,7 @@ To get started, log into the SciPy 2025 Nebari instance following the instructio
 If the conference has already ended, but you still want to run this workshop in the cloud, please see our [Binder instructions](docs/launching_binder.md).
 ```
 
-Once logged in to Nebari, click on the JupyterLab card to open the JupyterLab interface. You will be prompted to select an instance type. A medium instance will be sufficient for this workshop; we will not be leveraging GPU acceleration.
+Once logged in to Nebari, click on the JupyterLab card to open the JupyterLab interface. You will be prompted to select an instance type. Please select the instance labeled `Medium Instance (MyST)`; we will not be leveraging GPU acceleration.
 
 ## Open a desktop tab
 
@@ -26,7 +26,10 @@ Now that our desktop is set up, we can proceed to running code!
 
 ## Run workshop notebooks
 
-To access the workshop materials, you can select the workshop repository in the Tutorials section of the JupyterLab Launcher or you can clone the repository using the Git integration in the left-most sidebar and clicking the "Clone a Repository" button.
+To access the workshop materials, you can select the workshop repository in the Tutorials section of the JupyterLab Launcher "Create custom image visualization and analysis tools with napari".  
+
+Alternately, you can use the Git integration in the left-most sidebar and click the "Clone a Repository" button.
+
 
 ![Nebari JupyterHub Git integration](resources/nebari-git-integration.png)
 
