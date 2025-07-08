@@ -46,6 +46,20 @@ spots_url = 'https://raw.githubusercontent.com/kevinyamauchi/napari-spot-detecti
 spots = io.imread(spots_url)
 ```
 
+Or, you can load the data locally, if you cloned the repository:
+
+```{code-cell} ipython3
+from skimage import io
+
+nuclei_path = 'data/nuclei_cropped.tif'
+nuclei = io.imread(nuclei_path)
+
+spots_path = 'data/spots_cropped.tif'
+spots = io.imread(spots_path)
+```
+
+And then we set up our viewer and add the data as layers.
+
 ```{code-cell} ipython3
 import napari
 from napari.utils import nbscreenshot
@@ -62,7 +76,7 @@ viewer.add_image(spots, colormap = 'I Orange', blending='minimum')
 
 ## A basic filtering function
 
-Now let's write a function that takes an array and a `sigma` value and performs the 
+Now let's write a function that takes an array and a `sigma` value and performs the
 high-pass operation. The goal is to remove some of the background signal and possible autofluorescence.
 
 ```{code-cell} ipython3
@@ -72,7 +86,7 @@ from scipy import ndimage as ndi
 def gaussian_high_pass(image, sigma):
     low_pass = ndi.gaussian_filter(image, sigma)
     high_passed_im = (image - low_pass).clip(0)
-    
+
     return high_passed_im
 ```
 
@@ -92,21 +106,21 @@ To test on other input images or use different sigma values, we would have to re
 
 ## Obtaining a basic widget using the `@magicgui` decorator
 
-Now lets modify the function slightly, by providing type annotations and a docstring, to 
+Now lets modify the function slightly, by providing type annotations and a docstring, to
 leverage napari `magicgui` integration.
 
 ````{tip}
-A brief note about type hints:  
+A brief note about type hints:
 Type hints are not enforced at runtime, **but** they can still raise `NameError` exceptions if not defined or imported.
 To avoid that, we are putting the napari types in quotes to make them "forward references", because we have
 not imported them. Alternatively, we could have imported them. A third option is to import:
 
 ```python
-from __future__ import annotations 
+from __future__ import annotations
 ```
 
-This would permit us to drop the quotes from the type hints.  
-For more information, see the official Python documentation for: 
+This would permit us to drop the quotes from the type hints.
+For more information, see the official Python documentation for:
 [type hints in Python](https://peps.python.org/pep-0484/), [forward references](https://peps.python.org/pep-0484/#forward-references),and [annotations](https://peps.python.org/pep-0563/).
 
 ````
@@ -127,7 +141,7 @@ def gaussian_high_pass(
     sigma : float
         The sigma (width) of the gaussian filter to be applied.
         The default value is 2.
-    
+
     Returns
     -------
     high_passed_im : np.ndarray
@@ -135,12 +149,12 @@ def gaussian_high_pass(
     """
     low_pass = ndi.gaussian_filter(image, sigma)
     high_passed_im = (image - low_pass).clip(0)
-    
+
     return high_passed_im
 ```
 
 We have our `magicgui` decorated function and we've annotated it with the napari types.
-Now, the object `gaussian_high_pass` is both a (compound) widget and a callable function. 
+Now, the object `gaussian_high_pass` is both a (compound) widget and a callable function.
 Let's add it to the viewer.
 
 ```{code-cell} ipython3
@@ -151,7 +165,7 @@ viewer.window.add_dock_widget(gaussian_high_pass)
 nbscreenshot(viewer)
 ```
 
-Notice that because we told `magicgui` that our function will use not just any numpy array, but 
+Notice that because we told `magicgui` that our function will use not just any numpy array, but
 specifically `ImageData`---the data of a `napari` Image layer---and that it will also return that same type, `magicgui`
 generated UI widgets for selecting an Image layer---if you add a different layer type, it won't show
 up in the dropdown!
@@ -194,8 +208,8 @@ Our `magicgui` decorated `gaussian_high_pass` object *is the widget*, so we can 
 gaussian_high_pass.sigma.value
 ```
 
-At the same time, `gaussian_high_pass` remains a callable function. Let's call it normally, to check 
-that the function is still working as expected. Remember, type hints are not enforced by Python at runtime, 
+At the same time, `gaussian_high_pass` remains a callable function. Let's call it normally, to check
+that the function is still working as expected. Remember, type hints are not enforced by Python at runtime,
 so nothing should have changed.
 
 ```{code-cell} ipython3
@@ -218,7 +232,7 @@ viewer.window.remove_dock_widget("all")
 
 ```{code-cell} ipython3
 @magicgui(
-        auto_call=True, 
+        auto_call=True,
         sigma={"widget_type": "FloatSlider", "min": 0, "max": 20}
         )
 def gaussian_high_pass(
@@ -233,7 +247,7 @@ def gaussian_high_pass(
     sigma : float
         The sigma (width) of the gaussian filter to be applied.
         The default value is 2.
-    
+
     Returns
     -------
     high_passed_im : np.ndarray
@@ -241,7 +255,7 @@ def gaussian_high_pass(
     """
     low_pass = ndi.gaussian_filter(image, sigma)
     high_passed_im = (image - low_pass).clip(0)
-    
+
     return high_passed_im
 ```
 
@@ -271,11 +285,11 @@ nbscreenshot(viewer)
 
 ## A more complex example
 
-Finally, lets make a widget for the whole workflow developed in the [Exploratory analysis: spot detection](spot_detection_basic) 
-notebook as a function. We will need to write a function and then properly annotate it such that `magicgui` can generate the widgets. 
-This time we are also starting with image layer (data), but then we want a Points layer with points. We could again return 
-just the layer data using `napari.types.PointsData`. However, we would like some control over the Points layer visualization, so 
-we will return a LayerDataTuple.  
+Finally, lets make a widget for the whole workflow developed in the [Exploratory analysis: spot detection](spot_detection_basic)
+notebook as a function. We will need to write a function and then properly annotate it such that `magicgui` can generate the widgets.
+This time we are also starting with image layer (data), but then we want a Points layer with points. We could again return
+just the layer data using `napari.types.PointsData`. However, we would like some control over the Points layer visualization, so
+we will return a LayerDataTuple.
 
 If `detect_spots()` returns a `LayerDataTuple`, napari will add a *new layer* to
 the viewer using the data in the `LayerDataTuple`. Briefly:
@@ -284,7 +298,7 @@ the viewer using the data in the `LayerDataTuple`. Briefly:
       coordinates)
 - `layer_metadata`: the display options for the layer stored as a
       dictionary. Some options to consider: `symbol`, `size`, `face_color`
-- `layer_type`: the name of the layer type as a string—in this case `'Points'`  
+- `layer_type`: the name of the layer type as a string—in this case `'Points'`
 
 For more information on using the `LayerDataTuple` type, please see [the documentation](https://napari.org/stable/guides/magicgui.html#returning-napari-types-layerdatatuple).
 
@@ -323,7 +337,7 @@ def detect_spots(
         The expected sigma (width) of the spots. This parameter
         is passed to the "max_sigma" parameter of the blob
         detector.
-    
+
     Returns
     -------
     points_coords : np.ndarray
@@ -332,7 +346,7 @@ def detect_spots(
     sizes : np.ndarray
         An array of size N, where N is the number of detected spots
         with the diameter of each spot.
-    
+
     """
     # filter the image layer data
     filtered_spots = gaussian_high_pass(image.data, high_pass_sigma)
@@ -344,8 +358,8 @@ def detect_spots(
         threshold=None,
         threshold_rel=spot_threshold
     )
-    
-    # convert the output of the blob detector to the 
+
+    # convert the output of the blob detector to the
     # desired points_coords and sizes arrays
     # (see the docstring for details)
     points_coords = blobs_log[:, 0:2]
@@ -377,7 +391,7 @@ nbscreenshot(viewer)
 
 ```{tip}
 In this notebook we used the `@magicgui` decorator, which turned out function into both a function
-and a widget. Another similar option is the `@magic_factory` decorator. This one *does not return a widget instance immediately*. Instead, it turns out function into a "widget factory function" that can be called to *create a widget instance*. This can be more convenient in many cases, if you are writing a library or package where someone else will be instantiating your widget.  
+and a widget. Another similar option is the `@magic_factory` decorator. This one *does not return a widget instance immediately*. Instead, it turns out function into a "widget factory function" that can be called to *create a widget instance*. This can be more convenient in many cases, if you are writing a library or package where someone else will be instantiating your widget.
 One additional important—and useful!—distinction is that `@magic_factory` gains the `widget_init` keyword argument, which will be called with the new widget each time the factory function is called.
 For more details, on the two `magicgui` decorators, see [the official documentation](https://pyapp-kit.github.io/magicgui/decorators/).
 ```
@@ -385,7 +399,7 @@ For more details, on the two `magicgui` decorators, see [the official documentat
 ## Custom keybindings
 
 napari has extensive keyboard shortcuts that can be customized in the Preferences/Settings GUI.
-However, it also enables you to bind key-press events to custom callback functions. Again, the 
+However, it also enables you to bind key-press events to custom callback functions. Again, the
 napari implementation (`bind_key`) is smart, so arguments like the viewer getting the key press or the current
 selected layer of a given time will be passed to your function.
 
@@ -401,11 +415,11 @@ def print_number_of_points(points_layer: "napari.layers.Points"):
     print("Detected points: ", len(points_layer.data))
 ```
 
-Give it a shot in the viewer, you should get a print statement in the notebook, when you press the 
+Give it a shot in the viewer, you should get a print statement in the notebook, when you press the
 keybinding with a Points layer selected, but not with any other layer type.
 
 ```{tip}
-We used `print`, so the output ends up in the notebook (or the terminal, REPL, etc.). To get something visible in the 
+We used `print`, so the output ends up in the notebook (or the terminal, REPL, etc.). To get something visible in the
 viewer itself, you can use [`napari.utils.notifications.show_info`](https://napari.org/dev/api/napari.utils.notifications.html).
 ```
 
@@ -441,7 +455,7 @@ Try to implement a widget or keybinding on your own! If you have something that 
 
 ## Conclusions
 
-We've now seen how to how to extend the viewer with custom GUI functionality: widgets and keybindings. 
+We've now seen how to how to extend the viewer with custom GUI functionality: widgets and keybindings.
 By using these concepts you can making analyses even more interactive, particularly exploratory/human-in-the-loop
 analysis. Additionally, the approach described here, using `magicgui`, can also be directly used to create
 a plugin to share with the world.
