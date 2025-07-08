@@ -31,8 +31,10 @@ signature, i.e. the function linked to the contribution defines what napari
 provides to the plugin (e.g., data and parameters) and what the plugin returns
 to napari. napari is then able to use the functions pointed to in `napari.yaml`
 to carry out the plugin tasks. Please see the
-[manifest reference](https://napari.org/stable/plugins/technical_references/manifest.html) and
-[contribution reference](https://napari.org/stable/plugins/technical_references/contributions.html) for more details.
+[contributions guide](https://napari.org/dev/plugins/building_a_plugin/guides.html) for more details.
+(And technical references for the
+[manifest](https://napari.org/dev/plugins/technical_references/manifest.html) and
+[contributions](https://napari.org/dev/plugins/technical_references/contributions.html).
 Many plugins will declare multiple contributions to provide all of the desired
 functionality.
 
@@ -260,7 +262,7 @@ napari can infer the correct GUI elements to add to our plugin.
     - `from scipy import ndimage as ndi`
     - `from skimage.feature import blob_log`
 12. Finally, we need to add the function to the [`napari.yaml`](https://napari.org/dev/plugins/building_a_plugin/first_plugin.html#add-a-napari-yaml-manifest)
-    file so that napari can find the declerations of the plugin without having to import every module
+    file so that napari can find the declarations of the plugin without having to import every module
     at startup. You can read more about how to properly declare a widget in the
     [Contributions Reference](https://napari.org/dev/plugins/technical_references/contributions.html#contributions-widgets).
     In addition, we can declare plugin contributions to [napari menus](https://napari.org/dev/naps/6-contributable-menus.html#plugin-submenus)
@@ -452,7 +454,7 @@ provided some ideas for ways that you can extend the plugin. Please feel free to
 give them a go and ask the teaching team if you have any questions.
 
 - Add sample data to your plugin. To do so, you would need to implement the
-  [sample data contribution](https://napari.org/stable/plugins/technical_references/contributions.html#contributions-sample-data)
+  [sample data contribution](https://napari.org/dev/plugins/building_a_plugin/guides.html#sample-data)
 - Add an option to your `detect_spots()` function plugin to return the filtered
   image in addition to the points layer.
 - Add some tests to the `_tests/test_widget.py` file.
