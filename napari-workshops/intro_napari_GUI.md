@@ -25,7 +25,7 @@ napari
 ```
 
 ````{note}
-If you are using [the Binder cloud setup](docs/launching_binder.md), then in the Binder Jupyter lab interface, you can open a Desktop in a browser tab using the `D` "Desktop" tile and then open a Terminal session using the `$_` "Terminal" tile. In this terminal, you can launch napari in the Desktop browser tab using the command:
+If you are using [the Binder cloud setup](docs/launching_binder.md) or [Nebari](docs/nebari.md), then in the Jupyter lab interface, you can open a Desktop in a browser tab using the `D` "Desktop" tile and then open a Terminal session using the `$_` "Terminal" tile. In this terminal, you can launch napari in the Desktop browser tab using the command:
 ```bash
 DISPLAY=:1.0 napari
 ```
@@ -47,14 +47,18 @@ After a few seconds (or up to a minute if it's the first launch and you have var
 **File** > **Open files** and select a tif, png, or jpg file to open—or drag-n-drop one onto
 the canvas.
 
+```{tip}
+You can search actions in the command palette, which you can open with the `Command+Shift+P` (Mac) or `Control+Shift+P` (Windows and Linux) keyboard shortcut. Search for 'Cells 3D' to open the sample image.
+```
+
 ```{note} By default, napari can open (and save) a wide range of non-proprietary file formats. For proprietary image formats, you will need to install an appropriate plugin. You can search the [napari-hub](https://napari-hub.org) to find one!
 ```
 
 ## Explore Images in 2D and 3D  
 
-* Toggle layer visibility on and off with the **eye button to the left of the layer name** in the layer list.  
+* Toggle layer visibility on and off with the **eye button to the left of the layer name** in the layer list.
 
-* Use the dimension sliders beneath the canvas to  control the z position/slice number. Slide through the 3D stack one 2D slice at a time.  
+* Use the dimension sliders beneath the canvas to  control the z position/slice number. Slide through the 3D stack one 2D slice at a time.
 
 * Scroll (use two finger scroll on a touchpad) to zoom in and out.  
 
