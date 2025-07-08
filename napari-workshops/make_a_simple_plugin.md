@@ -3,33 +3,38 @@
 # Creating a napari plugin
 
 ## Overview
+
 In this tutorial, we will make a napari analysis plugin from the
 `detect_spots()` function we wrote in the first part of this practical session.
 The primary steps in making a napari plugin are as follows:
 
 1. Choose which manifest contribution(s) your plugin requires
-2. Create your repository using the napari cookiecutter template
+2. Create your repository using the [napari-plugin-template](https://github.com/napari/napari-plugin-template)
 3. Implement your contributions
 4. Share your plugin with the community
 
-In the following sections, we will work through steps (1) - (3). For step (4),
-you can refer to the [in depth plugin tutorial](https://www.youtube.com/watch?v=NL-VywidzXE),
-or [the instructions on napari.org](https://napari.org/plugins/test_deploy.html#preparing-for-release).
-You can also use
-[the lecture slides](https://docs.google.com/presentation/d/1-9ObrjrbjtrsO3kjEZELpd3QFDM0ct-oa3L-EIdO77I/edit?usp=sharing)
-as reference material if you'd like.
+In the following sections, we will work through steps (1) - (3).
+To set up a minimal plugin, you can read the ["Your first plugin"](https://napari.org/dev/plugins/building_a_plugin/first_plugin.html#your-first-plugin) tutorial on napari.org.
+A functional napari plugin only needs 4 files to be shared with the community,
+but you will find many other helpful files in the template that make plugins
+easier to develop and maintain.
+For step (4), you can refer to the [in depth plugin tutorial](https://www.youtube.com/watch?v=NL-VywidzXE),
+or [the deploy instructions on napari.org](https://napari.org/dev/plugins/building_a_plugin/index.html#[plugin-test-deploy]).
 
 ![plugin example](./resources/plugin-01.png)
 
 ## Choosing a contribution
+
 A contribution is a construct in `napari.yaml` (the manifest file), that napari
 uses for each specific type of plugin. Each contribution conforms to a function
 signature, i.e. the function linked to the contribution defines what napari
 provides to the plugin (e.g., data and parameters) and what the plugin returns
 to napari. napari is then able to use the functions pointed to in `napari.yaml`
 to carry out the plugin tasks. Please see the
-[contribution reference](https://napari.org/plugins/contributions.html) and
-[contribution guide](https://napari.org/plugins/guides.html) for more details.
+[contributions guide](https://napari.org/dev/plugins/building_a_plugin/guides.html) for more details.
+(And technical references for the
+[manifest](https://napari.org/dev/plugins/technical_references/manifest.html) and
+[contributions](https://napari.org/dev/plugins/technical_references/contributions.html).
 Many plugins will declare multiple contributions to provide all of the desired
 functionality.
 
@@ -48,13 +53,15 @@ In this tutorial, we will create a spot detection plugin by implementing a
 widget contribution with the spot detection function (`detect_spots()`) we
 created in the first part of this practical session.
 
-## Using the cookiecutter template to create your plugin repository
+## Using the copier `napari-plugin-template` to create your plugin repository
+
 To make creating the creating plugins easier, we provide a template that
 automatically builds most of the infrastructure for your plugin, so you can
 focus on implementing the details unique to your plugin. The template is
 implemented using a command line utility called
-[`cookiecutter`](https://github.com/cookiecutter/cookiecutter). In the following
-steps, you will build your plugin directory using the cookiecutter template.
+[`copier`](https://github.com/copier-org/copier).
+In the following steps, you will build your plugin directory using the
+[`napari-plugin-template`](https://github.com/napari/napari-plugin-template) template.
 
 First, open your terminal and navigate to the folder where you want the plugin
 folder to be created. As before, we recommend using your Documents folder:
@@ -64,99 +71,75 @@ cd ~/Documents
 ```
 
 Next, activate the conda environment you created in the first part of the
-tutorial. This environment includes all of the packages required to make your
-plugin (including `cookiecutter`).
+tutorial and install the necessary packages to run the template.
 
 ```bash
 conda activate napari-workshop
+conda install copier jinja2-time npe2
 ```
 
-In this next step, we will use `cookiecutter` to create a directory for our
-plugin from the template. `cookiecutter` will ask a series of questions that
+In this next step, we will use `copier` to create a directory for our
+plugin from the template. The template will ask a series of questions that
 will customize the directory for your plugin. Once completed, a new directory
 will be created in your current directory. It will come pre-initialized with a
-git repository.
+git repository. Replace \<new-plugin-name> with the name you would like to
+call your plugin.
 
 ```bash
-cookiecutter https://github.com/napari/cookiecutter-napari-plugin
+copier copy --trust https://github.com/napari/napari-plugin-template <new-plugin-name>
+```
+
+Alternatively, you can use a single command to start the template with `uv`:
+
+```bash
+uv tool run --with jinja2-time --with npe2 copier copy --trust https://github.com/napari/napari-plugin-template <new-plugin-name>
 ```
 
 You will be asked for some information to customize the setup of your plugin.
-Each prompt gives the default value in square brackets (`[]`). The questions are
-explained below. Enter your answer after the prompt and press enter to continue.
+Each prompt gives the default value in square brackets (`[]`). Enter your answer
+after the prompt and press enter to continue. When prompted for which plugins
+to include, you only need to answer `Yes` to `Include widget plugin?`,
+but you may be interested in exploring the other contributions as well.
 
-- `full_name [Napari Developer]`: enter your name here. Names entered here will
-  be listed as the authors of the plugin in the package metadata.
-- `email [yourname@example.com]`: this email will be listed as the contact
-  information in the package metadata
-- `github_username_or_organization [githubuser]`: if you have a github username,
-  you can enter it here. It will be used to generate a GitHub URL for you after
-  you enter a plugin name.
-- `plugin_name [napari-foobar]`: enter the name you would like your plugin to be
-  called. spaces are not allowed and are often replaced with `-` (e.g.,
-  `napari-spot-detector`). This will be your PyPI package name (if you choose to
-  deploy your plugin).
-- `Select github_repository_url:` this is used for plugin metadata and is not
-  required now. If you don't plan to upload it to your github, select 2.
-- `module_name [napari_foobar]`: this is the name of the module containing your
-  plugin code. typically, this is the plugin name with the `-` replaced with `_`
-  (e.g., `napari_spot_detector`).
-- `display_name [napari FooBar]`: this name will show up in the napari viewer
-  and on the napari hub if you release your plugin. You should pick something
-  human readable and ideally indicative of what your plugin does. There are no
-  restrictions on the symbols in this name.
-- `short_description [A simple plugin to use with napari]`: give a one sentence
-  description of your plugin. This will go into the readme.
-- `include_reader_plugin [y]`: answer `y` (for yes) if you would like a reader
-  contribution. We do not need a reader contribution for this tutorial, so
-  answer `n` for no.
-- `include_writer_plugin [y]`answer `y` (for yes) if you would like a writer
-  contribution. We do not need a reader contribution for this tutorial, so
-  answer `n` for no.
-- `include_sample_data_plugin [y]`: answer `y` (for yes) if you would like a
-  sample data contribution. We do not need a sample data contribution for this
-  tutorial, so answer `n` for no.
-- `include_dock_widget_plugin [y]`: answer `y` (for yes) if you would like a
-  widget contribution. We are implementing a widget contribution for this
-  tutorial, **so answer `y` for yes**.
-- `use_git_tags_for_versioning [n]`: we will not be covering setting plugin
-  versions in this tutorial, so enter `n` for no.
-- `install_precommit [n]`: we will not be covering precommit in this tutorial,
-  so enter `n` for no.
-- `Select license`: select the license you would like to use for your plugin.
-  The license sets the rules for how others can build upon and re-use your
-  plugin code. For more information on typical open source licenses,
-  [choosealicense.com](https://choosealicense.com/) is a good primer. The
-  default choice is [BSD-3](https://opensource.org/licenses/BSD-3-Clause).
-
+To read more about the prompts, you can refer to the `napari-plugin-template`
+[Prompts Reference](https://github.com/napari/napari-plugin-template/blob/main/PROMPTS.md)
 After completing all of the questions, a directory will be created containing
 your new napari plugin. You will be given instructions on how to upload the
 initialized git repository to GitHub. By default, we will not be covering this
 aspect in the tutorial, but please feel free to ask the teaching team if you
 would like to give it a try. Your new plugin directory (assuming you called the
 plugin `napari-spot-detector` and the module `napari_spot_detector`) will be
-organized as follows (with some irrelevant files/folders omitted)
+organized as follows.
 
-```
+```text
 napari-spot-detector
 ├── .github
-│   └── workflows
-│       └── test_and_deploy.yml
-├── LICENSE
-├── MANIFEST.in
-├── .napari
-│   └── DESCRIPTION.md
-├── pyproject.toml
-├── README.md
-├── setup.cfg
+|   ├── ISSUE_TEMPLATE
+|   |   ├── bug_report.yml
+│   |   ├── documentation.md
+│   |   ├── feature_request.md
+│   |   └── task.md
+│   ├── workflows
+│   |   └── test_and_deploy.yml
+|   ├── PULL_REQUEST_TEMPLATE.md
+│   └── dependabot.yml
+├── .napari-hub
+│   ├── DESCRIPTION.md
+|   └── config.yml
 ├── src
 │   └── napari_spot_detector
-│       ├── __init__.py
-│       ├── napari.yaml
 │       ├── _tests
 │       │   ├── __init__.py
 │       │   └── test_widget.py
+│       ├── __init__.py
+│       ├── napari.yaml
 │       └── _widget.py
+├── .gitignore
+├── .pre-commit-config.yaml
+├── LICENSE
+├── MANIFEST.in
+├── pyproject.toml
+├── README.md
 └── tox.ini
 ```
 
@@ -170,8 +153,8 @@ the other files.
   available through the built-in napari plugin browser. Please ask the teaching
   team if you would like to learn how to set up your github repository to
   support this workflow.
-- `pyproject.toml` and `setup.cfg`: These files allow your plugin to be built as
-  a package and installed by pip. The cookiecutter template has set everything
+- `pyproject.toml`: This file allows your plugin to be built as
+  a package and installed by pip. The `napari-plugin-template` has set everything
   up in these files, so you are good to go!
 - The `src/` folder contains all the Python code for your plugin.
 - `src/napari_spot_detector/_widget.py`: This file contains example
@@ -186,96 +169,60 @@ You have now set up the directory for your new plugin! You can explore the
 directory and files with the file browser. In the next step, you will complete
 your plugin by adding your `detect_spots()` function to the `_widget.py` file.
 
-## Implementing a function GUI
+## Implementing a widget contribution
+
 In this step, we will implement our `detect_spots()` function as a plugin
 contribution. First, we will add our spot detection function to the plugin
-package. Then, we will add the type annotations to the function to so that
+package. Then, we will add the type annotations to the function so that
 napari can infer the correct GUI elements to add to our plugin.
 
 1. To edit your plugin source code, open an integrated development environment
    (VSCode is a good, free option) or text editor.
-2. In VSCode, open the directory you created with `cookiecutter` in the section
+2. In VSCode, open the directory you created with `copier` in the section
    above.
      - From the "File" menu, select "Open..."
-     - Navigate to and select the directory you created with `cookiecutter`
+     - Navigate to and select the directory you created with `copier`
      (`~/Documents/napari-spot-detector` if you called your plugin
-     `napari-spot-detector)`. 
+     `napari-spot-detector)`.
 3. You should now see your plugin directory in the "Explorer" pane in the left
    hand side of the window. You can double click on folders to expand them and
    files to open them in the editor.
-4. Open the `<module_name>/_widget.py` file using VSCode by double clicking on
+4. Open the `src/<module_name>/_widget.py` file using VSCode by double clicking on
    it in the "Explorer" pane.
 5. You will see that it has already been populated with a few code blocks by
-   cookiecutter.
+   the template.
      - At the top, you see the imports. You can leave unchanged for now.
 
-       ```python
-       from typing import TYPE_CHECKING
+     - Next, you see four different ways to add widgets to napari.
 
-       from magicgui import magic_factory
-       from qtpy.QtWidgets import QHBoxLayout, QPushButton, QWidget
+        1. The first is a pure Python function flagged with `autogenerate: true`
+           in the plugin manifest. Type annotations are used by magicgui to
+           generate widgets for each parameter. This is best suited for simple
+           processing tasks - usually taking in and/or returning a layer.
 
-       if TYPE_CHECKING:
-           import napari
-       ```
+        2. The second option is a `magic_factory` decorated function. The
+           `magic_factory` decorator allows you to customize aspects of the
+           resulting GUI, including the widgets associated with each parameter.
+           This is best used when you have a very simple processing task, but
+           want some control over the autogenerated widgets.
 
-     - Next, you see three different ways to add widgets to napari.
+        3. The third option is a `magicgui.widgets.Container` subclass. This
+           provides lots of flexibility and customization options while still
+           supporting `magicgui` widgets and convenience methods for creating
+           widgets from type annotations. If you want to easily customize your widgets
+           and connect callbacks, this is the best widget option for you.
 
-        1. The first subclasses `QWidget` directly. This option provides maximum
-           flexibility, but means you have to take care of adding all the
-           different GUI elements, laying them out, and hooking them up to the
-           viewer.
+        4. The fourth option subclasses `QWidget` directly. This provides maximal
+           flexibility but requires full specification of widget layouts,
+           callbacks, events, etc.
 
-             ```python
-             class ExampleQWidget(QWidget):
-                 # your QWidget.__init__ can optionally request the napari viewer instance
-                 # in one of two ways:
-                 # 1. use a parameter called `napari_viewer`, as done here
-                 # 2. use a type annotation of 'napari.viewer.Viewer' for any parameter
-                 def __init__(self, napari_viewer):
-                     super().__init__()
-                     self.viewer = napari_viewer
-
-                     btn = QPushButton("Click me!")
-                     btn.clicked.connect(self._on_click)
-
-                     self.setLayout(QHBoxLayout())
-                     self.layout().addWidget(btn)
-
-                 def _on_click(self):
-                     print("napari has", len(self.viewer.layers), "layers")    
-             ```
-
-
-        2. The second option is to write a `magic_factory` decorated function.
-           You might recognize this from our `intensify` widget in the lecture.
-           With minimal extra work you can configure options for your GUI
-           elements, such as min and max values for integers, or choices for
-           dropdown boxes. See the
-           [magicgui configuration docs](https://napari.org/magicgui/usage/configuration.html)
-           for details on what you can configure in the decorator.
-
-             ```python
-             @magic_factory
-             def example_magic_widget(img_layer: "napari.layers.Image"):
-                 print(f"you have selected {img_layer}")
-             ```
-
-        3. Finally, you see the what looks like just a plain function. We don't
-           need complex GUI interactions for our plugin, and we don't want to
-           have to lay out the GUI ourselves, so we will modify this to
-           incorporate our `detect_spots` function.
-
-             ```python
-             # Uses the `autogenerate: true` flag in the plugin manifest
-             # to indicate it should be wrapped as a magicgui to autogenerate
-             # a widget.
-             def example_function_widget(img_layer: "napari.layers.Image"):
-                 print(f"you have selected {img_layer}")
-             ```
-
+     - For this tutorial, we'll focus on the first approach (the autogenerate
+       function) since it's the simplest and most suitable for our spot
+       detection function. This means our function doesn't need to know anything about magicgui. If
+       we provide type annotations to the parameters, the GUI widgets will be
+       generated for us without even a decorator!
      - Find the `Command` ID in `napari.yaml` that points to
-       `example_function_widget`, and then find that `Command` ID in the
+       `threshold_autogenerate_widget`, and then find that `Command` ID in the
        `Widgets` contribution section. Note that unlike the other `widget`
        contributions, this one includes `autogenerate: true`.
 
@@ -285,25 +232,20 @@ napari can infer the correct GUI elements to add to our plugin.
            display_name: Example Function Widget
          ```
 
-     - This means our function doesn't need to know anything about magicgui. If
-       we provide type annotations to the parameters, the GUI widgets will be
-       generated for us without even a decorator!
+     - Let's edit `threshold_autogenerate_widget` to do our spot detection.
 
-     - Let's edit `example_function_widget` to do our spot detection.
-
-6. You can delete everything above `example_function_widget` in `_widget.py` if
-   you want. If you do, make sure to delete the associated `Commands` and
-   `Widget` contributions, and the imports in
-   `napari_spot_detector/__init__.py`!
+6. You can keep all the example functions in `_widget.py` for reference, or you
+   can delete the ones you don't need. If you delete any functions, make sure
+   to also delete the associated `Commands` and `Widget` contributions from
+   `napari.yaml`, and update the imports in `napari_spot_detector/__init__.py`!
 7. Copy the `gaussian_high_pass()` and `detect_spots()` functions from your
-   notebook from the first part of the tutorial and paste it where the example
-   functions were (the ones you deleted in the previous step).
-8. Next, we need to modify `detect_spots()` to return the necessary layer data
-   so that napari can create a new Points layer with our detected spots. If
+   notebook from the first part of the tutorial and add them to the file.
+8. Next, we need to modify `detect_spots()` to work as a napari widget. You can
+   either modify the existing `threshold_autogenerate_widget` function or create
+   a new function. The function should return the necessary layer data so that
+   napari can create a new `Points` layer with our detected spots. If
    `detect_spots()` returns a `LayerDataTuple`, napari will add a new layer to
-   the viewer using the data in the `LayerDataTuple`. For more information on
-   the `LayerDataTuple` type, please see
-   [the docs](https://napari.org/plugins/guides.html#the-layerdata-tuple).
+   the viewer using the data in the [`LayerDataTuple`](https://napari.org/stable/howtos/extending/magicgui.html#returning-napari-types-layerdatatuple).
     - The layer data tuple should be: `(layer_data, layer_metadata, layer_type)`
     - `layer_data`: the data to be displayed in the new layer (i.e., the points
       coordinates)
@@ -311,14 +253,20 @@ napari can infer the correct GUI elements to add to our plugin.
       dictionary. Some options to consider: `symbol`, `size`
     - `layer_type`: the name of the layer type as a string (i.e., `'Points'`)
 9. Add type annotations to the function parameters (inputs). napari (via
-   [magicgui](https://napari.org/magicgui/)) will infer the required GUI
+   [magicgui](https://pyapp-kit.github.io/magicgui/)) will infer the required GUI
    elements from the type annotations. We have to add annotations to both the
    parameters (i.e., inputs to the function) and the return type.
-10. Annotate the Return type as `"napari.types.LayerDataTuple"`. 
+10. Annotate the Return type as `"napari.types.LayerDataTuple"`.
 11. Add the required imports for the `scipy.ndimage` module and `scikit-image`
    `blob_log()` function to the top of the file.
     - `from scipy import ndimage as ndi`
     - `from skimage.feature import blob_log`
+12. Finally, we need to add the function to the [`napari.yaml`](https://napari.org/dev/plugins/building_a_plugin/first_plugin.html#add-a-napari-yaml-manifest)
+    file so that napari can find the declarations of the plugin without having to import every module
+    at startup. You can read more about how to properly declare a widget in the
+    [Contributions Reference](https://napari.org/dev/plugins/technical_references/contributions.html#contributions-widgets).
+    In addition, we can declare plugin contributions to [napari menus](https://napari.org/dev/naps/6-contributable-menus.html#plugin-submenus)
+    so that users can find your contributions according to intended use.
 
 ### _function.py solution
 
@@ -414,60 +362,60 @@ def detect_spots(
 
 ```
 
-```python
-# napari_spot_detector/__init__.py
-__version__ = "0.0.1"
-```
-
 ```yaml
 #napari.yaml
 name: napari-spot-detector
 display_name: Spot Detection
 contributions:
   commands:
-    - id: napari-spot-detector.make_func_widget
+    - id: napari-spot-detector.make_detect_spots_widget
       python_name: napari_spot_detector._widget:detect_spots
       title: Make spot detection widget
   widgets:
-    - command: napari-spot-detector.make_func_widget
+    - command: napari-spot-detector.make_detect_spots_widget
       autogenerate: true
       display_name: Spot Detection
+  menus:
+    napari/layers/segment:
+      - command: napari-spot-detector.make_detect_spots_widget
 ```
 
-## Explore the other files generated by cookiecutter
+## Explore the other files generated by napari-plugin-template
+
 In order for napari to automatically find and make your plugin available to the
 user once it has been installed (i.e., "discoverable"), we must add a
-`napari.manifest` entry point to the `setup.cfg` file. An entry point is a way
+`napari.manifest` entry point to the `pyproject.toml` file. An entry point is a way
 that a Python package can advertise that it has a component available (our
 plugin in this case). napari searches the python environment for packages that
 have a `napari.manifest` and then uses the path in the `entry_point` to find
 `napari.yaml`, where all your plugin functionality is declared.
 
-If we open the `setup.cfg` file created by `cookiecutter`, we see that the entry
-point was already added by the cookiecutter template! If you called your plugin
+If we open the `pyproject.toml` file created by the template, we see that the entry
+point was already added by the template! If you called your plugin
 `napari-spot-detector` and your module `napari_spot_detector`, you will see the
 following:
 
-```
-[options.entry_points]
+```yaml
+[project.entry-points."napari.manifest"]
 napari.manifest =
-    napari-spot-detector = napari_spot_detector:napari.yaml
+    napari-spot-detector = "napari_spot_detector:napari.yaml"
 ```
 
 Note that `src` doesn't occur in the path to `napari.yaml`, but `napari.yaml` is
 definitely within the `src` folder! Python knows to look inside the `src` folder
-for your code because `setup.cfg` declares an `options.packages.find` key.
+for your code because `pyproject.toml` declares so with the following:
 
-```
-[options.packages.find]
-where = src
+```yaml
+[tool.setuptools.packages.find]
+where = ["src"]
 ```
 
-## Testing/Installing your plugin
-To test and use our plugin, we need to install it in our Python environment.
+## Installing and trying out your plugin
+
+To use our plugin, we need to install it in our Python environment.
 First, return to your terminal and verify you have the `napari-workshop`
 environment activated. Then, navigate to the directory that you created with the
-cookiecutter. For example, if you named your plugin `napari-spot-detector`, you
+template. For example, if you named your plugin `napari-spot-detector`, you
 would enter the following into your terminal.
 
 ```bash
@@ -499,7 +447,6 @@ the napari viewer, and try running the plugin.
 
 Congratulations! You have made your first napari plugin!
 
-
 ## Bonus exercises
 
 In case you have finished all of the exercises with some time to spare, we have
@@ -507,7 +454,7 @@ provided some ideas for ways that you can extend the plugin. Please feel free to
 give them a go and ask the teaching team if you have any questions.
 
 - Add sample data to your plugin. To do so, you would need to implement the
-  [sample data contribution](https://napari.org/plugins/guides.html#sample-data)
+  [sample data contribution](https://napari.org/dev/plugins/building_a_plugin/guides.html#sample-data)
 - Add an option to your `detect_spots()` function plugin to return the filtered
   image in addition to the points layer.
 - Add some tests to the `_tests/test_widget.py` file.
