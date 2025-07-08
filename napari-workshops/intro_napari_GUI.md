@@ -140,7 +140,7 @@ the viewer or to save the screenshot to the clipboard instead of a file.
 
 You can save the layers individually using the File menu or Command+S (Mac) / Control+S (Windows and Linux). 
 
-* For image layers, you can select the file type by providing the extension. 
+* For image layers, you can select the file type by providing the extension. Some extensions are lossless, like `.tiff`, and others are lossy, like `.jpeg`; use the file extension appropriate to your use case.
 Note: Some formats may not work for all image types, e.g. 3D stacks. Additional file types 
 can be made available by plugins.
 * Points and Shapes layers are saved as `.csv` files that contain their coordinates.
