@@ -140,16 +140,24 @@ the viewer or to save the screenshot to the clipboard instead of a file.
 
 You can save the layers individually using the File menu or Command+S (Mac) / Control+S (Windows and Linux). 
 
-* For image layers, you can select the file type by providing the extension. Some extensions are lossless, like `.tiff`, and others are lossy, like `.jpeg`; use the file extension appropriate to your use case.
-Note: Some formats may not work for all image types, e.g. 3D stacks. Additional file types 
+* For image layers, you can select the file type by providing the extension.
+Note: Some formats may not work for all image types, e.g. 3D stacks. Additional file types
 can be made available by plugins.
 * Points and Shapes layers are saved as `.csv` files that contain their coordinates.
 * Labels layers are saved as `.tiff` files.
 
 Multiple different layer types, e.g. image and points, can be saved to a single `.svg` file,
-which can be convenient for use in a vector graphics program or for web. 
-* Select more than one layer and use the File menu or Command+S (Mac) / Control+S (Windows and Linux), then in the dialog dropdown menu ensure `napari SVG` is selected, give the file a name, and save.
+which can be convenient for use in a vector graphics program or for web.
 
+* Select more than one layer and use the File menu or Command+S (Mac) / Control+S (Windows and Linux),
+  then in the dialog dropdown menu ensure `napari SVG` is selected, give the file a name, and save.
+
+Finally, you can save a screenshot of the canvas (where the data is) and the viewer with
+the respective "Save Screenshot" option in the file menu.
+This is useful for sharing the current rendered view of the data. If you want to export the full visualized data,
+you can also use the `viewer.export_figure()` method which will adjust the canvas to fit the extents of the data
+and save a screenshot of the canvas. You can compare `viewer.screenshot()` and `viewer.export_figure()` in
+this [gallery example](https://napari.org/stable/gallery/screenshot_and_export_figure.html).
 
     ```{important} 
     The output file will not be openable in napari!
