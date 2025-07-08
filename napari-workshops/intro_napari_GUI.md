@@ -25,7 +25,7 @@ napari
 ```
 
 ````{note}
-If you are using [the Binder cloud setup](docs/launching_binder.md), then in the Binder Jupyter lab interface, you can open a Desktop in a browser tab using the `D` "Desktop" tile and then open a Terminal session using the `$_` "Terminal" tile. In this terminal, you can launch napari in the Desktop browser tab using the command:
+If you are using [the Binder cloud setup](docs/launching_binder.md) or [Nebari](docs/nebari.md), then in the Jupyter lab interface, you can open a Desktop in a browser tab using the `D` "Desktop" tile and then open a Terminal session using the `$_` "Terminal" tile. In this terminal, you can launch napari in the Desktop browser tab using the command:
 ```bash
 DISPLAY=:1.0 napari
 ```
@@ -47,14 +47,18 @@ After a few seconds (or up to a minute if it's the first launch and you have var
 **File** > **Open files** and select a tif, png, or jpg file to open—or drag-n-drop one onto
 the canvas.
 
+```{tip}
+You can search actions in the command palette, which you can open with the `Command+Shift+P` (Mac) or `Control+Shift+P` (Windows and Linux) keyboard shortcut. Search for 'Cells 3D' to open the sample image.
+```
+
 ```{note} By default, napari can open (and save) a wide range of non-proprietary file formats. For proprietary image formats, you will need to install an appropriate plugin. You can search the [napari-hub](https://napari-hub.org) to find one!
 ```
 
 ## Explore Images in 2D and 3D  
 
-* Toggle layer visibility on and off with the **eye button to the left of the layer name** in the layer list.  
+* Toggle layer visibility on and off with the **eye button to the left of the layer name** in the layer list.
 
-* Use the dimension sliders beneath the canvas to  control the z position/slice number. Slide through the 3D stack one 2D slice at a time.  
+* Use the dimension sliders beneath the canvas to  control the z position/slice number. Slide through the 3D stack one 2D slice at a time.
 
 * Scroll (use two finger scroll on a touchpad) to zoom in and out.  
 
@@ -136,16 +140,24 @@ the viewer or to save the screenshot to the clipboard instead of a file.
 
 You can save the layers individually using the File menu or Command+S (Mac) / Control+S (Windows and Linux). 
 
-* For image layers, you can select the file type by providing the extension. 
-Note: Some formats may not work for all image types, e.g. 3D stacks. Additional file types 
+* For image layers, you can select the file type by providing the extension.
+Note: Some formats may not work for all image types, e.g. 3D stacks. Additional file types
 can be made available by plugins.
 * Points and Shapes layers are saved as `.csv` files that contain their coordinates.
 * Labels layers are saved as `.tiff` files.
 
 Multiple different layer types, e.g. image and points, can be saved to a single `.svg` file,
-which can be convenient for use in a vector graphics program or for web. 
-* Select more than one layer and use the File menu or Command+S (Mac) / Control+S (Windows and Linux), then in the dialog dropdown menu ensure `napari SVG` is selected, give the file a name, and save.
+which can be convenient for use in a vector graphics program or for web.
 
+* Select more than one layer and use the File menu or Command+S (Mac) / Control+S (Windows and Linux),
+  then in the dialog dropdown menu ensure `napari SVG` is selected, give the file a name, and save.
+
+Finally, you can save a screenshot of the canvas (where the data is) and the viewer with
+the respective "Save Screenshot" option in the file menu.
+This is useful for sharing the current rendered view of the data. If you want to export the full visualized data,
+you can also use the `viewer.export_figure()` method which will adjust the canvas to fit the extents of the data
+and save a screenshot of the canvas. You can compare `viewer.screenshot()` and `viewer.export_figure()` in
+this [gallery example](https://napari.org/stable/gallery/screenshot_and_export_figure.html).
 
     ```{important} 
     The output file will not be openable in napari!
