@@ -18,7 +18,7 @@ In this activity, we will perform spot detection on some in situ sequencing data
 ([Feldman and Singh et al., Cell, 2019](https://www.cell.com/cell/fulltext/S0092-8674(19)31067-0s)).
 In doing so, we will combine methods from [scipy](https://www.scipy.org/) and
 [scikit-image](https://scikit-image.org/). The goal is to familiarize you with
-performing analysis that integrates the scientific python ecosystem and napari.  
+performing analysis that integrates the scientific python ecosystem and napari.
 This notebook also serves as the basis and motivation for the next notebook: [From workflow to widget: customizing napari](spot_detection_functions).
 
 ## Data source
@@ -44,7 +44,7 @@ if 'BINDER_SERVICE_HOST' in os.environ or 'NEBARI_JUPYTERHUB_SSH_SERVICE_HOST' i
 
 ## Screenshots
 As previously, we will use the `nbscreenshot` to document our work in the notebook as we go along.
-As a reminder, the usage is: 
+As a reminder, the usage is:
 
 ```Python
 nbscreenshot(viewer)
@@ -68,6 +68,18 @@ spots_url = 'https://raw.githubusercontent.com/kevinyamauchi/napari-spot-detecti
 spots = io.imread(spots_url)
 ```
 
+Alternatively, you can load the data locally, if you cloned the repository:
+
+```{code-cell} ipython3
+from skimage import io
+
+nuclei_path = 'data/nuclei_cropped.tif'
+nuclei = io.imread(nuclei_path)
+
+spots_path = 'data/spots_cropped.tif'
+spots = io.imread(spots_path)
+```
+
 ## View the data
 
 To view our data, we will create a napari viewer and then we will add the images to the viewer
@@ -88,7 +100,7 @@ viewer.add_image(spots, colormap='magenta', blending='additive')
 ```
 
 After loading the data, inspect it in the viewer and adjust the
-layer settings to your liking (e.g., contrast limits, colormap). 
+layer settings to your liking (e.g., contrast limits, colormap).
 You can pan/zoom around the image by click/dragging to pan and scrolling with your
 mousewheel or trackpad to zoom.
 
@@ -182,8 +194,8 @@ blobs_log = blob_log(
     high_passed_spots, max_sigma=3,
     threshold=None,  # use a relative threshold instead
     threshold_rel=0.2)
-    
-# convert the output of the blob detector to the 
+
+# convert the output of the blob detector to the
 # desired points_coords and sizes arrays
 # (see the docstring for details)
 spot_coords = blobs_log[:, 0:2]
@@ -219,12 +231,12 @@ nbscreenshot(viewer)
 ## Optional: using Points layer `features`
 
 `features` is a table associated with a Points layer that can store additional data associated with
-a data point. It has one row per data element (Point) and one column per feature. This would enable you 
-to add other attributes like `volume` or `maximum-intensity` should you calculate those for each cell. 
-Importantly, napari can not only display the values of associated features in the status bar, but 
-also use them for styling, e.g. for `face_color`. For more information, see the 
-[Points layer guide](https://napari.org/stable/howtos/layers/points.html#using-the-points-features-table), 
-[the Points annotation tutorial](https://napari.org/stable/tutorials/annotation/annotate_points.html) 
+a data point. It has one row per data element (Point) and one column per feature. This would enable you
+to add other attributes like `volume` or `maximum-intensity` should you calculate those for each cell.
+Importantly, napari can not only display the values of associated features in the status bar, but
+also use them for styling, e.g. for `face_color`. For more information, see the
+[Points layer guide](https://napari.org/stable/howtos/layers/points.html#using-the-points-features-table),
+[the Points annotation tutorial](https://napari.org/stable/tutorials/annotation/annotate_points.html)
 or the ["Add points with features" Gallery example](https://napari.org/stable/gallery/add_points_with_features.html#sphx-glr-gallery-add-points-with-features-py).
 
 
@@ -264,6 +276,6 @@ nbscreenshot(viewer)
 ## Conclusion
 In this activity, we have developed done the exploratory analysis for spot detection
 using a combination of Jupyter notebook, scipy, scikit-image, and napari. In the
-next activity, we will convert this workflow into a spot detection function to make 
+next activity, we will convert this workflow into a spot detection function to make
 it easier to explore the effect of parameters. Then, we will turn that into a napari widget
 using `magicgui`.
