@@ -35,7 +35,7 @@ Alternately, you can use the Git integration in the left-most sidebar and click 
 
 For the repository address, enter the following URL:
 ```
-https://github.com/DragaDoncila/napari-scipy2025-workshop
+https://github.com/napari/napari-scipy2025-workshop
 ```
 
 Once you have the materials cloned, you should see a directory named `napari-scipy2025-workshop` in the file browser tab, which can be accessed by the top-most button, the Folder icon, in the left-most sidebar.  You can navigate to the `notebooks` directory inside the `napari-workshops` directory to find all the workshop notebooks.
