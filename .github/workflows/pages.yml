@@ -37,7 +37,7 @@ jobs:
       - name: qt libs
         uses: tlambert03/setup-qt-libs@19e4ef2d781d81f5f067182e228b54ec90d23b76 # v1.8
       - name: Setup Pages
-        uses: actions/configure-pages@1f0c5cde4bc74cd7e1254d0cb4de8d49e9068c7d # v4.0.0
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
       - uses: aganders3/headless-gui@f85dd6316993505dfc5f21839d520ae440c84816 # v2.2
         name: Build workshop
         with:
